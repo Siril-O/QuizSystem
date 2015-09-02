@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({ @NamedQuery(name = "Variant.fiandAllVariants", query = "SELECT v FROM Variant AS v") })
 
 @Entity
 public class Variant {
@@ -25,6 +29,28 @@ public class Variant {
 
 	public Variant() {
 		super();
+	}
+
+	public Variant(String description, Boolean rightAnswer) {
+		super();
+		this.description = description;
+		this.rightAnswer = rightAnswer;
+	}
+
+	public Variant(Long id, Question question, String description,
+			Boolean rightAnswer) {
+		super();
+		this.id = id;
+		this.question = question;
+		this.description = description;
+		this.rightAnswer = rightAnswer;
+	}
+
+	public Variant(Question question, String description, Boolean rightAnswer) {
+		super();
+		this.question = question;
+		this.description = description;
+		this.rightAnswer = rightAnswer;
 	}
 
 	/**
@@ -85,6 +111,17 @@ public class Variant {
 	 */
 	public void setRightAnswer(Boolean rightAnswer) {
 		this.rightAnswer = rightAnswer;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Variant [id=" + id + ", description=" + description
+				+ ", rightAnswer=" + rightAnswer + "]";
 	}
 
 }

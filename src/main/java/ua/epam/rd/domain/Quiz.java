@@ -1,17 +1,22 @@
 package ua.epam.rd.domain;
 
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
+@NamedQueries({ @NamedQuery(name = "Quiz.findAllQuizes", query = "SELECT q FROM Quiz AS q") })
 @Entity
 public class Quiz {
 
@@ -25,17 +30,19 @@ public class Quiz {
 	@JoinColumn(name = "SUBJECT_ID")
 	private Subject subject;
 
-	@ManyToMany
-	@JoinTable(name = "QUIZ_QUESTIONS",
-				joinColumns = { @JoinColumn(name = "QUIZ_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "QUESTION_ID") })
-	private List<Question> questions;
-	
+	// @ManyToMany
+	// @JoinTable(name = "QUIZ_QUESTIONS",
+	// joinColumns = { @JoinColumn(name = "QUIZ_ID") },
+	// inverseJoinColumns = { @JoinColumn(name = "QUESTION_ID") })
+	// private List<Question> questions;
+	@OneToMany(mappedBy = "quiz", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OrderBy("ID")
+	private Set<Question> questions;
+
 	public Quiz() {
 		super();
 	}
 
-	
 	public Quiz(Long id, String name, Subject subject) {
 		super();
 		this.id = id;
@@ -43,22 +50,26 @@ public class Quiz {
 		this.subject = subject;
 	}
 
+	public Quiz(String name, Subject subject) {
+		super();
+		this.name = name;
+		this.subject = subject;
+	}
 
-	public Quiz(String name, Subject subject, List<Question> questions) {
+	public Quiz(String name, Subject subject, Set<Question> questions) {
 		super();
 		this.name = name;
 		this.subject = subject;
 		this.questions = questions;
 	}
 
-	public Quiz(Long id, String name, Subject subject, List<Question> questions) {
+	public Quiz(Long id, String name, Subject subject, Set<Question> questions) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.subject = subject;
 		this.questions = questions;
 	}
-
 
 	/**
 	 * @return the id
@@ -68,7 +79,8 @@ public class Quiz {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -82,7 +94,8 @@ public class Quiz {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -96,7 +109,8 @@ public class Quiz {
 	}
 
 	/**
-	 * @param subject the subject to set
+	 * @param subject
+	 *            the subject to set
 	 */
 	public void setSubject(Subject subject) {
 		this.subject = subject;
@@ -105,16 +119,27 @@ public class Quiz {
 	/**
 	 * @return the questions
 	 */
-	public List<Question> getQuestions() {
+	public Set<Question> getQuestions() {
 		return questions;
 	}
 
 	/**
-	 * @param questions the questions to set
+	 * @param questions
+	 *            the questions to set
 	 */
-	public void setQuestions(List<Question> questions) {
+	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Quiz [id=" + id + ", name=" + name + ", subject=" + subject
+				+ ", questions=" + questions + "]";
+	}
+
 }

@@ -27,4 +27,21 @@ public class JPASubjectService implements SubjectService {
 		return subjectRepository.getAllSubjects();
 	}
 
+	@Override
+	public Subject findById(Long id) {
+		return subjectRepository.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public void update(Subject subject) {
+		subjectRepository.update(subject);
+	}
+
+	@Override
+	@Transactional
+	public void remove(Long id) {
+		subjectRepository.remove(id);
+	}
+
 }

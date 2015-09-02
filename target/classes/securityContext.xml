@@ -25,10 +25,10 @@
 		<csrf disabled="true" />
 	</http>-->
 
-	<!-- <authentication-manager> <authentication-provider> <user-service> <user 
+	 <authentication-manager> <authentication-provider> <user-service> <user 
 		name="kiril" password="123" authorities="ROLE_USER, ROLE_ADMIN" /> <user 
 		name="bob" password="123" authorities="ROLE_USER" /> </user-service> </authentication-provider> 
-		</authentication-manager> -->
+		</authentication-manager>
 
 <!-- <beans:bean id="mySuccessHandler" class="ua.epam.rd.dev.edu.web.MySuccessHandler"></beans:bean>
 	<beans:bean id="jPAAuthenticationProvider" name="jPAAuthenticationProvider"

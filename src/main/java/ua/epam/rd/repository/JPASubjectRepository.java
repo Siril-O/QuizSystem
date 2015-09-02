@@ -29,4 +29,24 @@ public class JPASubjectRepository implements SubjectRepository {
 		return query.getResultList();
 	}
 
+	@Override
+	public Subject findById(Long id) {
+		return em.find(Subject.class, id);
+	}
+
+	@Override
+	public void update(Subject subject) {
+		if (subject.getId() != null) {
+			em.merge(subject);
+		}
+	}
+
+	@Override
+	public void remove(Long id) {
+		Subject subject = em.find(Subject.class, id);
+		if (subject != null) {
+			em.remove(subject);
+		}
+	}
+
 }

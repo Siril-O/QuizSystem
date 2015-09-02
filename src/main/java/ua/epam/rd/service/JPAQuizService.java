@@ -1,5 +1,7 @@
 package ua.epam.rd.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,29 @@ public class JPAQuizService implements QuizService {
 	@Override
 	@Transactional
 	public void save(Quiz quiz) {
-
 		quizRepository.save(quiz);
+	}
+
+	@Override
+	@Transactional
+	public void update(Quiz quiz) {
+		quizRepository.update(quiz);
+	}
+
+	@Override
+	public Quiz findById(Long id) {
+		return quizRepository.findById(id);
+	}
+
+	@Override
+	public List<Quiz> findAllQuizes() {
+		return quizRepository.findAllQuizes();
+	}
+
+	@Override
+	@Transactional
+	public void remove(Long id) {
+		quizRepository.remove(id);
 	}
 
 }
