@@ -3,16 +3,21 @@ package ua.epam.rd.web;
 import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
 import ua.epam.rd.domain.Subject;
+import ua.epam.rd.domain.User;
 import ua.epam.rd.domain.Variant;
 import ua.epam.rd.service.QuestionService;
 import ua.epam.rd.service.QuizService;
 import ua.epam.rd.service.SubjectService;
+import ua.epam.rd.service.UserService;
 import ua.epam.rd.service.VariantService;
 
 public abstract class AbstractController {
@@ -25,6 +30,16 @@ public abstract class AbstractController {
 	protected VariantService variantService;
 	@Autowired
 	protected SubjectService subjectService;
+	@Autowired
+	private UserService userService;
+
+	protected User addUserToModel(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		User user = userService.getByEmail(authentication.getName());
+		model.addAttribute("user", user);
+		return user;
+	}
 
 	protected Subject getSubjectById(Long id) {
 		Subject subject = subjectService.findById(id);
@@ -38,19 +53,18 @@ public abstract class AbstractController {
 
 	@InitBinder
 	public void subjectBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Subject.class,
-				new PropertyEditorSupport() {
+		binder.registerCustomEditor(Subject.class, new PropertyEditorSupport() {
 
-					@Override
-					public void setAsText(String subjectId) {
-						Subject subject = null;
-						if (subjectId != null && !subjectId.trim().isEmpty()) {
-							Long id = Long.valueOf(subjectId);
-							subject = getSubjectById(id);
-						}
-						setValue(subject);
-					}
-				});
+			@Override
+			public void setAsText(String subjectId) {
+				Subject subject = null;
+				if (subjectId != null && !subjectId.trim().isEmpty()) {
+					Long id = Long.valueOf(subjectId);
+					subject = getSubjectById(id);
+				}
+				setValue(subject);
+			}
+		});
 	}
 
 	protected Question getQuestionById(Long id) {
@@ -128,6 +142,32 @@ public abstract class AbstractController {
 					quiz = getQuizById(id);
 				}
 				setValue(quiz);
+			}
+		});
+	}
+
+	protected User getUserById(Long id) {
+		User user = userService.findByid(id);
+		if (id <= 0)
+			throw new IllegalArgumentException("ID<0");
+		if (user == null) {
+			throw new RuntimeException("User with Id: " + id + " not found");
+		}
+		return user;
+	}
+
+	@InitBinder
+	public void userBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(User.class, new PropertyEditorSupport() {
+
+			@Override
+			public void setAsText(String userId) {
+				User user = null;
+				if (userId != null && !userId.trim().isEmpty()) {
+					Long id = Long.valueOf(userId);
+					user = getUserById(id);
+				}
+				setValue(user);
 			}
 		});
 	}

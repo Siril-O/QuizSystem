@@ -1,11 +1,11 @@
-package ua.epam.rd.repository;
+package ua.epam.rd.service;
 
 import java.util.List;
 
 import ua.epam.rd.domain.Role;
 import ua.epam.rd.domain.User;
 
-public interface UserRepository {
+public interface UserService {
 
 	public void save(User user);
 

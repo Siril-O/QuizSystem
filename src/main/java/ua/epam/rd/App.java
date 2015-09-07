@@ -8,11 +8,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.Role;
 import ua.epam.rd.domain.Subject;
+import ua.epam.rd.domain.User;
 import ua.epam.rd.domain.Variant;
 import ua.epam.rd.service.QuestionService;
 import ua.epam.rd.service.QuizService;
 import ua.epam.rd.service.SubjectService;
+import ua.epam.rd.service.UserService;
 
 /**
  * Hello world!
@@ -31,17 +34,22 @@ public class App {
 		SubjectService subjectService = context.getBean(SubjectService.class);
 		QuestionService questionService = context
 				.getBean(QuestionService.class);
-		 subjectService.save(new Subject("JavaScript"));
+		// subjectService.save(new Subject("JavaScript"));
+		UserService userService = context.getBean(UserService.class);
+
+		userService.save(new User("John", "Malkovich", "malkovich@gmail.com",
+				"123", Role.ROLE_USER));
+
 		// quizService.save(new Quiz("Java core junion v1.0",
 		// subjectService.findById(1l)));
-		System.out.println(subjectService.getAllSubjects());
-	//	Quiz quiz = quizService.findById(2l);
+		// System.out.println(subjectService.getAllSubjects());
+		// Quiz quiz = quizService.findById(2l);
 		// Question question = initQuestion();
-		//Question question = questionService.findById(2l);
+		// Question question = questionService.findById(2l);
 		// questionService.save(question);
-	//	quiz.getQuestions().add(question);
-	//	quizService.update(quiz);
-	//	System.out.println(quiz);
+		// quiz.getQuestions().add(question);
+		// quizService.update(quiz);
+		// System.out.println(quiz);
 		// System.out.println(quizService.findAllQuizes());
 
 	}

@@ -13,8 +13,8 @@
 <body>
 	<div class="container">
 		<h3>All Users</h3>
-		<form action="/QuizSystem/jsp/user/register" method="post">
-			<input type="submit" value="Register User" class="btn btn-primary" />
+		<form action="/QuizSystem/jsp/user/registerfdd" method="post">
+			<input type="submit" value="Dont push" class="btn btn-primary" />
 		</form>
 		<table class="table table-hover">
 			<tr>
@@ -22,9 +22,8 @@
 				<td>Name</td>
 				<td>Subject</td>
 				<td></td>
-				<td></td>
 			</tr>
-			<c:forEach var="quiz" items="${quizList}">
+			<c:forEach var="quiz" items="${user.avaliableQuizes}">
 				<tr>
 					<td><c:out value="${quiz.id}" /></td>
 					<td><c:out value="${quiz.name}" /></td>
@@ -33,13 +32,6 @@
 							<input type="submit" value="Edit" class="btn btn-primary" /> <input
 								type="hidden" name="quizId" value="${quiz.id}">
 						</form></td>
-					<td>
-						<form action="/QuizSystem/jsp/quiz/remove" method="post">
-							<input type="hidden" name="quizId" value="${quiz.id}">
-							<input type="submit" value="Remove" class="btn btn-primary" />
-							Confirm Remove<input type="checkbox" name="confirm">
-						</form>
-					</td>
 				</tr>
 			</c:forEach>
 		</table>

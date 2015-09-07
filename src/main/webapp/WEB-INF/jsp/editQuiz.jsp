@@ -19,7 +19,7 @@
 			Subject<input name="subject" value="${quiz.subject.name}"
 				readonly="readonly">
 		</form>
-		<form action="/QuizSystem/jsp/quiz/changeSubject" method="get">
+		<form action="/QuizSystem/jsp/quiz/changeSubject" method="post">
 			<input type="hidden" name="quizId" value="${quiz.id}" /> Subjects<select
 				name="subjectId">
 				<c:forEach var="subject" items="${subjects}">
@@ -31,7 +31,7 @@
 		</form>
 		<hr>
 		<h3>Edit questions</h3>
-		<form action="/QuizSystem/jsp/question/add" method="get">
+		<form action="/QuizSystem/jsp/question/add" method="post">
 			<input type="hidden" name="quizId" value="${quiz.id}" /> <input
 				type="submit" value="Add Question To Quiz" class="btn btn-primary" />
 		</form>
@@ -41,9 +41,9 @@
 				<li>ID:<c:out value="${question.id}" /><br>
 					<form action="/QuizSystem/jsp/question/remove" method="post">
 						<input type="hidden" name="questionId" value="${question.id}">
-						<input type="hidden" value="on" name="_confirm" />
-						<input type="submit" value="Remove" class="btn btn-primary" />
-						Confirm Remove<input type="checkbox" name="confirm">
+						<input type="hidden" value="on" name="_confirm" /> <input
+							type="submit" value="Remove" class="btn btn-primary" /> Confirm
+						Remove<input type="checkbox" name="confirm">
 					</form>
 					<form action="/QuizSystem/jsp/question/update" method="post">
 						<textarea rows="10" cols="70" name="description"><c:out
@@ -88,7 +88,6 @@
 										name="questionId" value="${question.id}" /> <a
 										href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
 										class="btn btn-primary">Remove</a></td>
-
 								</tr>
 							</table>
 						</form>

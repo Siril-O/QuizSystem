@@ -8,32 +8,29 @@
 
 	<global-method-security secured-annotations="enabled" />
 
-	<http pattern="/rest/**" create-session="stateless">
-		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<http-basic />
+	<http>
+		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
+		<intercept-url pattern="/**" access="isFullyAuthenticated()" />
+		<form-login login-page="/jsp/user/login" login-processing-url="/login"
+			username-parameter="username" password-parameter="password"
+			authentication-failure-url="/jsp/user/login?error" />
+		<logout />
 		<csrf disabled="true" />
 	</http>
 
-<!-- 	<http>
-		<intercept-url pattern="/jsp/login**" access="permitAll" />
-		<intercept-url pattern="/login**" access="permitAll" />
-		<intercept-url pattern="/**" access="isFullyAuthenticated()" />
-		<form-login login-page="/jsp/login" login-processing-url="/login"
-			username-parameter="username" password-parameter="password"
-			authentication-failure-url="/jsp/login?error" authentication-success-handler-ref="mySuccessHandler" />
-		<logout />
-		<csrf disabled="true" />
-	</http>-->
-
-	 <authentication-manager> <authentication-provider> <user-service> <user 
-		name="kiril" password="123" authorities="ROLE_USER, ROLE_ADMIN" /> <user 
-		name="bob" password="123" authorities="ROLE_USER" /> </user-service> </authentication-provider> 
-		</authentication-manager>
-
-<!-- <beans:bean id="mySuccessHandler" class="ua.epam.rd.dev.edu.web.MySuccessHandler"></beans:bean>
+	<!-- <authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="kiril" password="123" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="bob" password="123" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+ -->
+	<!-- <beans:bean id="mySuccessHandler" class="ua.epam.rd.dev.edu.web.MySuccessHandler"></beans:bean> -->
 	<beans:bean id="jPAAuthenticationProvider" name="jPAAuthenticationProvider"
-		class="ua.epam.rd.dev.edu.web.JPAAuthenticationProvider"></beans:bean>
+		class="ua.epam.rd.web.JPAAuthenticationProvider"></beans:bean>
 	<authentication-manager>
 		<authentication-provider ref="jPAAuthenticationProvider" />
-	</authentication-manager> -->
+	</authentication-manager>
 </beans:beans>

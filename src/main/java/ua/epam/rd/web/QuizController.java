@@ -29,7 +29,7 @@ public class QuizController extends AbstractController {
 		return "addQuiz";
 	}
 
-	@RequestMapping(value = "create")
+	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String createQuiz(@RequestParam("subjectId") Subject subject,
 			@ModelAttribute Quiz quiz, Model model) {
 		quiz.setSubject(subject);
@@ -38,14 +38,14 @@ public class QuizController extends AbstractController {
 		return "redirect:";
 	}
 
-	@RequestMapping(value = "/edit")
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String showEditForm(@RequestParam("quizId") Quiz quiz, Model model) {
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("subjects", subjectService.getAllSubjects());
 		return "editQuiz";
 	}
 
-	@RequestMapping(value = "/remove")
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String removeQuiz(
 			@RequestParam("quizId") Long quizId,
 			@RequestParam(value = "confirm", defaultValue = "false") boolean confirm) {
@@ -55,7 +55,7 @@ public class QuizController extends AbstractController {
 		return "redirect:";
 	}
 
-	@RequestMapping(value = "/changeName")
+	@RequestMapping(value = "/changeName", method = RequestMethod.POST)
 	public String editQuiz(@RequestParam("name") String name,
 			@RequestParam("quizId") Quiz quiz) {
 		quiz.setName(name);
@@ -63,7 +63,7 @@ public class QuizController extends AbstractController {
 		return "redirect:" + "edit?quizId=" + quiz.getId();
 	}
 
-	@RequestMapping(value = "/changeSubject")
+	@RequestMapping(value = "/changeSubject", method = RequestMethod.POST)
 	public String editQuiz(@RequestParam("subjectId") Subject subject,
 			@RequestParam("quizId") Quiz quiz) {
 		quiz.setSubject(subject);
@@ -71,4 +71,9 @@ public class QuizController extends AbstractController {
 		return "redirect:" + "edit?quizId=" + quiz.getId();
 	}
 
+	@RequestMapping("/avaliable")
+	public String viewAvaliableQuizes(Model model) {
+		addUserToModel(model);
+		return "user/quizes";
+	}
 }

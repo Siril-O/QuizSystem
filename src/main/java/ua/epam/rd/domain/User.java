@@ -1,48 +1,66 @@
 package ua.epam.rd.domain;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+@NamedQueries({
+		@NamedQuery(name = "User.getAllUsers", query = "SELECT u FROM User AS u"),
+		@NamedQuery(name = "User.getAllUsersByRole", query = "SELECT u FROM User AS u WHERE u.role=:role"),
+		@NamedQuery(name = "User.getByEmailAndPassword", query = "SELECT u FROM User AS u WHERE u.email=:email AND u.password=:password"),
+		@NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User AS u WHERE u.email=:email") })
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "EMAIL") })
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name = "ID")
 	private Long id;
-	@Column(name="FIRST_NAME")
+	@Column(name = "FIRST_NAME")
 	private String name;
-	@Column(name="LAST_NAME")
+	@Column(name = "LAST_NAME")
 	private String surname;
-	@Column(name="EMAIL")
+	@Column(name = "EMAIL")
 	private String email;
-	@Column(name="PASSWORD")
+	@Column(name = "PASSWORD")
 	private String password;
-	@Column(name="ROLE")
+	@Column(name = "ROLE")
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
-	@ManyToMany
-	@JoinTable(name="USER_AVALIABLE_QUIZ",
-				joinColumns={@JoinColumn(name="USER_ID")},
-				inverseJoinColumns={@JoinColumn(name="QUIZ_ID")})
-	private List<Quiz> avaliableQuizes;
-	
-	@OneToMany(mappedBy="user")
-	private List<QuizResult> quizResults;
-	
-	
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_AVALIABLE_QUIZ", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "QUIZ_ID") })
+	private Set<Quiz> avaliableQuizes;
+
+	@OneToMany(mappedBy = "user")
+	private Set<QuizResult> quizResults;
+
+	public User(String name, String surname, String email, String password,
+			Role role) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
 	public User() {
 		super();
 	}
@@ -55,7 +73,8 @@ public class User {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -69,7 +88,8 @@ public class User {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -83,7 +103,8 @@ public class User {
 	}
 
 	/**
-	 * @param surname the surname to set
+	 * @param surname
+	 *            the surname to set
 	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
@@ -97,7 +118,8 @@ public class User {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -118,7 +140,8 @@ public class User {
 	}
 
 	/**
-	 * @param role the role to set
+	 * @param role
+	 *            the role to set
 	 */
 	public void setRole(Role role) {
 		this.role = role;
@@ -127,38 +150,51 @@ public class User {
 	/**
 	 * @return the avaliableQuizes
 	 */
-	public List<Quiz> getAvaliableQuizes() {
+	public Set<Quiz> getAvaliableQuizes() {
 		return avaliableQuizes;
 	}
 
 	/**
-	 * @param avaliableQuizes the avaliableQuizes to set
+	 * @param avaliableQuizes
+	 *            the avaliableQuizes to set
 	 */
-	public void setAvaliableQuizes(List<Quiz> avaliableQuizes) {
+	public void setAvaliableQuizes(Set<Quiz> avaliableQuizes) {
 		this.avaliableQuizes = avaliableQuizes;
 	}
 
 	/**
 	 * @return the quizResults
 	 */
-	public List<QuizResult> getQuizResults() {
+	public Set<QuizResult> getQuizResults() {
 		return quizResults;
 	}
 
 	/**
-	 * @param quizResults the quizResults to set
+	 * @param quizResults
+	 *            the quizResults to set
 	 */
-	public void setQuizResults(List<QuizResult> quizResults) {
+	public void setQuizResults(Set<QuizResult> quizResults) {
 		this.quizResults = quizResults;
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", surname=" + surname
+				+ ", email=" + email + ", password=" + password + ", role="
+				+ role + "]";
+	}
 
-	
 }

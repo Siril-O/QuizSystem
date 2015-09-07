@@ -4,23 +4,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.User;
 
 @Controller
 @RequestMapping("question")
 public class QuestionController extends AbstractController {
 
-	@RequestMapping(value = "/add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String viewQuestionAddingForm(@RequestParam("quizId") Quiz quiz,
 			Model model) {
 		model.addAttribute("quiz", quiz);
 		return "addQuestion";
 	}
 
-	@RequestMapping(value = "/create")
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String addQuestion(@RequestParam("quizId") Quiz quiz,
 			@ModelAttribute Question question, Model model) {
 		question.setQuiz(quiz);
@@ -29,7 +31,7 @@ public class QuestionController extends AbstractController {
 				+ question.getQuiz().getId();
 	}
 
-	@RequestMapping(value = "/update")
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String editQuestion(@RequestParam("questionId") Question question,
 			@RequestParam String description, Model model) {
 		question.setDescription(description);
@@ -39,8 +41,9 @@ public class QuestionController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/remove")
-	public String removeQuestion(@RequestParam("questionId") Question question,
-			@RequestParam(value="confirm",defaultValue="false") boolean confirm) {
+	public String removeQuestion(
+			@RequestParam("questionId") Question question,
+			@RequestParam(value = "confirm", defaultValue = "false") boolean confirm) {
 		System.out.println("*********" + confirm);
 		if (confirm) {
 			question.getQuiz().getQuestions().remove(question);
@@ -49,5 +52,4 @@ public class QuestionController extends AbstractController {
 		return "redirect:" + "../quiz/edit?quizId="
 				+ question.getQuiz().getId();
 	}
-
 }
