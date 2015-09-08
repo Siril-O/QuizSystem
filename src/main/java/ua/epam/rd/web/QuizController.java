@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
 import ua.epam.rd.domain.Subject;
 
@@ -75,5 +77,12 @@ public class QuizController extends AbstractController {
 	public String viewAvaliableQuizes(Model model) {
 		addUserToModel(model);
 		return "user/quizes";
+	}
+	
+	@RequestMapping("/question")
+	public String viewPassingQuizForm(Model model, @RequestParam("questionId")Question question){
+		addUserToModel(model);
+		model.addAttribute(attributeValue)
+		return "user/question";
 	}
 }

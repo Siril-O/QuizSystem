@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Quiz List</title>
+<title>Question List</title>
 <link type="text/css" rel="stylesheet"
 	href="<c:url value="/bootstrap.min.css" />" />
 </head>
@@ -28,8 +28,8 @@
 					<td><c:out value="${quiz.id}" /></td>
 					<td><c:out value="${quiz.name}" /></td>
 					<td><c:out value="${quiz.subject.name}" /></td>
-					<td><form action="/QuizSystem/jsp/quiz/passing" method="get">
-							<input type="submit" value="Start passing" class="btn btn-primary" /> <input
+					<td><form action="/QuizSystem/jsp/quiz/edit" method="get">
+							<input type="submit" value="Edit" class="btn btn-primary" /> <input
 								type="hidden" name="quizId" value="${quiz.id}">
 						</form></td>
 				</tr>
