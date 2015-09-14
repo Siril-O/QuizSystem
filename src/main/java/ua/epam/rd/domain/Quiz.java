@@ -29,12 +29,7 @@ public class Quiz {
 	@OneToOne
 	@JoinColumn(name = "SUBJECT_ID")
 	private Subject subject;
-
-	// @ManyToMany
-	// @JoinTable(name = "QUIZ_QUESTIONS",
-	// joinColumns = { @JoinColumn(name = "QUIZ_ID") },
-	// inverseJoinColumns = { @JoinColumn(name = "QUESTION_ID") })
-	// private List<Question> questions;
+	
 	@OneToMany(mappedBy = "quiz", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("ID")
 	private Set<Question> questions;

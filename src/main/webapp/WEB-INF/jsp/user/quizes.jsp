@@ -28,7 +28,7 @@
 					<td><c:out value="${quiz.id}" /></td>
 					<td><c:out value="${quiz.name}" /></td>
 					<td><c:out value="${quiz.subject.name}" /></td>
-					<td><form action="/QuizSystem/jsp/quiz/passing" method="get">
+					<td><form action="/QuizSystem/jsp/quiz/passQuiz" method="get">
 							<input type="submit" value="Start passing" class="btn btn-primary" /> <input
 								type="hidden" name="quizId" value="${quiz.id}">
 						</form></td>

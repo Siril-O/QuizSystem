@@ -77,8 +77,8 @@ public final class quizes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<body>\r\n");
       out.write("\t<div class=\"container\">\r\n");
       out.write("\t\t<h3>All Users</h3>\r\n");
-      out.write("\t\t<form action=\"/QuizSystem/jsp/user/register\" method=\"post\">\r\n");
-      out.write("\t\t\t<input type=\"submit\" value=\"Register User\" class=\"btn btn-primary\" />\r\n");
+      out.write("\t\t<form action=\"/QuizSystem/jsp/user/registerfdd\" method=\"post\">\r\n");
+      out.write("\t\t\t<input type=\"submit\" value=\"Dont push\" class=\"btn btn-primary\" />\r\n");
       out.write("\t\t</form>\r\n");
       out.write("\t\t<table class=\"table table-hover\">\r\n");
       out.write("\t\t\t<tr>\r\n");
@@ -157,8 +157,8 @@ public final class quizes_jsp extends org.apache.jasper.runtime.HttpJspBase
           if (_jspx_meth_c_005fout_005f2(_jspx_th_c_005fforEach_005f0, _jspx_page_context, _jspx_push_body_count_c_005fforEach_005f0))
             return true;
           out.write("</td>\r\n");
-          out.write("\t\t\t\t\t<td><form action=\"/QuizSystem/jsp/quiz/edit\" method=\"get\">\r\n");
-          out.write("\t\t\t\t\t\t\t<input type=\"submit\" value=\"Edit\" class=\"btn btn-primary\" /> <input\r\n");
+          out.write("\t\t\t\t\t<td><form action=\"/QuizSystem/jsp/quiz/passQuiz\" method=\"get\">\r\n");
+          out.write("\t\t\t\t\t\t\t<input type=\"submit\" value=\"Start passing\" class=\"btn btn-primary\" /> <input\r\n");
           out.write("\t\t\t\t\t\t\t\ttype=\"hidden\" name=\"quizId\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${quiz.id}", java.lang.String.class, (PageContext)_jspx_page_context, null, false));
           out.write("\">\r\n");

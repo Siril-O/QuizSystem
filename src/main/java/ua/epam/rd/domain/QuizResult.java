@@ -9,9 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+@NamedQueries({ @NamedQuery(
+		name = "QuizResult.findByUser", 
+		query = "SELECT qr FROM QuizResult AS qr WHERE qr.user.id=:userId")})
 
 @Entity
 @Table(name = "USER_TEST_RESULT")
@@ -59,6 +65,17 @@ public class QuizResult {
 		this.wrongAnswers = wrongAnswers;
 	}
 
+	public QuizResult(Quiz quiz, User user, Date startTime, Date endTime,
+			Integer rightAnswers, Integer wrongAnswers) {
+		super();
+		this.quiz = quiz;
+		this.user = user;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.rightAnswers = rightAnswers;
+		this.wrongAnswers = wrongAnswers;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -67,7 +84,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -81,7 +99,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param test the test to set
+	 * @param test
+	 *            the test to set
 	 */
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
@@ -95,7 +114,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
@@ -109,7 +129,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param startTime the startTime to set
+	 * @param startTime
+	 *            the startTime to set
 	 */
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
@@ -123,7 +144,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param endTime the endTime to set
+	 * @param endTime
+	 *            the endTime to set
 	 */
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
@@ -137,7 +159,8 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param rightAnswers the rightAnswers to set
+	 * @param rightAnswers
+	 *            the rightAnswers to set
 	 */
 	public void setRightAnswers(Integer rightAnswers) {
 		this.rightAnswers = rightAnswers;
@@ -151,11 +174,11 @@ public class QuizResult {
 	}
 
 	/**
-	 * @param wrongAnswers the wrongAnswers to set
+	 * @param wrongAnswers
+	 *            the wrongAnswers to set
 	 */
 	public void setWrongAnswers(Integer wrongAnswers) {
 		this.wrongAnswers = wrongAnswers;
 	}
-	
-	
+
 }

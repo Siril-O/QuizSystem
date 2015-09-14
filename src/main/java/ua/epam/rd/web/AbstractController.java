@@ -15,6 +15,7 @@ import ua.epam.rd.domain.Subject;
 import ua.epam.rd.domain.User;
 import ua.epam.rd.domain.Variant;
 import ua.epam.rd.service.QuestionService;
+import ua.epam.rd.service.QuizResultService;
 import ua.epam.rd.service.QuizService;
 import ua.epam.rd.service.SubjectService;
 import ua.epam.rd.service.UserService;
@@ -31,7 +32,9 @@ public abstract class AbstractController {
 	@Autowired
 	protected SubjectService subjectService;
 	@Autowired
-	private UserService userService;
+	protected UserService userService;
+	@Autowired
+	protected QuizResultService quizResultService;
 
 	protected User addUserToModel(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext()

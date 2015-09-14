@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,16 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.QuizResult;
 import ua.epam.rd.domain.Role;
 import ua.epam.rd.domain.User;
-import ua.epam.rd.service.UserService;
 
 @Controller
 @RequestMapping("user")
 public class UserController extends AbstractController {
-
-	@Autowired
-	private UserService userService;
 
 	@RequestMapping("/")
 	public String showUsers(Model model) {
@@ -82,6 +78,12 @@ public class UserController extends AbstractController {
 		return "login";
 	}
 
-
+	@RequestMapping("/results")
+	public String viewUserQuizResults(Model model) {
+		User user = addUserToModel(model);
+		List<QuizResult> quizResults = quizResultService.findByUser(user);
+		model.addAttribute("quizResultList", quizResults);
+		return "user/quizResults";
+	}
 
 }

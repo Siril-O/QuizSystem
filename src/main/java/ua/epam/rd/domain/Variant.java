@@ -11,7 +11,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @NamedQueries({ @NamedQuery(name = "Variant.fiandAllVariants", query = "SELECT v FROM Variant AS v") })
-
 @Entity
 public class Variant {
 
@@ -122,6 +121,55 @@ public class Variant {
 	public String toString() {
 		return "Variant [id=" + id + ", description=" + description
 				+ ", rightAnswer=" + rightAnswer + "]";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((rightAnswer == null) ? 0 : rightAnswer.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Variant other = (Variant) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (rightAnswer == null) {
+			if (other.rightAnswer != null)
+				return false;
+		} else if (!rightAnswer.equals(other.rightAnswer))
+			return false;
+		return true;
 	}
 
 }

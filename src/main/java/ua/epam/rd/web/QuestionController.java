@@ -1,5 +1,7 @@
 package ua.epam.rd.web;
 
+import java.util.HashMap;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +46,6 @@ public class QuestionController extends AbstractController {
 	public String removeQuestion(
 			@RequestParam("questionId") Question question,
 			@RequestParam(value = "confirm", defaultValue = "false") boolean confirm) {
-		System.out.println("*********" + confirm);
 		if (confirm) {
 			question.getQuiz().getQuestions().remove(question);
 			questionService.remove(question.getId());
