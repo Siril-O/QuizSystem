@@ -15,12 +15,12 @@ public class SubjectController extends AbstractController {
 	@RequestMapping(value = "/")
 	public String viewAllSubjects(Model model) {
 		model.addAttribute("subjectList", subjectService.getAllSubjects());
-		return "subject";
+		return "admin/subject";
 	}
 
 	@RequestMapping(value = "/add")
 	public String viewSubjectAddForm(Model model) {
-		return "addSubject";
+		return "admin/addSubject";
 	}
 
 	@RequestMapping(value = "/create")
@@ -33,7 +33,7 @@ public class SubjectController extends AbstractController {
 	public String viewSubjectEditForm(
 			@RequestParam("subjectId") Subject subject, Model model) {
 		model.addAttribute("subject", subject);
-		return "editSubject";
+		return "admineditSubject";
 	}
 
 	@RequestMapping(value = "/update")

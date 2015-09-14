@@ -17,7 +17,7 @@ public class VariantController extends AbstractController {
 	public String viewAddVariantForm(
 			@RequestParam("questionId") Question question, Model model) {
 		model.addAttribute("question", question);
-		return "addVariant";
+		return "admin/addVariant";
 	}
 
 	@RequestMapping(value = "/edit")

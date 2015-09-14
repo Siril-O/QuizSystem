@@ -34,13 +34,13 @@ public class QuizController extends AbstractController {
 	public String showQuizes(Model model) {
 		List<Quiz> quizes = quizService.findAllQuizes();
 		model.addAttribute("quizList", quizes);
-		return "quiz";
+		return "admin/quiz";
 	}
 
 	@RequestMapping(value = "add")
 	public String viewAddQuizForm(Model model) {
 		model.addAttribute("subjects", subjectService.getAllSubjects());
-		return "addQuiz";
+		return "admin/addQuiz";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
@@ -56,7 +56,7 @@ public class QuizController extends AbstractController {
 	public String showEditForm(@RequestParam("quizId") Quiz quiz, Model model) {
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("subjects", subjectService.getAllSubjects());
-		return "editQuiz";
+		return "admin/editQuiz";
 	}
 
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)

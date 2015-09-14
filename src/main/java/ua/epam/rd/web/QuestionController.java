@@ -21,7 +21,7 @@ public class QuestionController extends AbstractController {
 	public String viewQuestionAddingForm(@RequestParam("quizId") Quiz quiz,
 			Model model) {
 		model.addAttribute("quiz", quiz);
-		return "addQuestion";
+		return "admin/addQuestion";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
