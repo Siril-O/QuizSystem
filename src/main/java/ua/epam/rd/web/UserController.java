@@ -26,6 +26,21 @@ public class UserController extends AbstractController {
 		return "admin/user";
 	}
 
+	@RequestMapping("/edit")
+	public String viewEditForm(Model model, @RequestParam("userId") User user) {
+		model.addAttribute("userToEdit", user);
+		return "admin/editUser";
+	}
+
+	@RequestMapping("/update")
+	public String updateUser(@RequestParam("id") User oldUser,
+			@ModelAttribute("newUser") User user) {
+		user.setPassword(oldUser.getPassword());
+		user.setRole(oldUser.getRole());
+		userService.update(user);
+		return "redirect:";
+	}
+
 	@RequestMapping("/assignQuizForm")
 	public String viewQuizAssignForm(@RequestParam("userId") User user,
 			Model model) {
@@ -59,7 +74,7 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/register")
-	public String viewRegisterForm(@ModelAttribute User user,
+	public String viewRegisterForm(@ModelAttribute("newUser") User user,
 			@RequestParam("confirmPassword") String confirmation, Model model) {
 		if (!confirmation.equals(user.getPassword())) {
 			return "admin/register";
@@ -79,11 +94,16 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/results")
-	public String viewUserQuizResults(Model model) {
-		User user = addUserToModel(model);
+	public String viewUserQuizResults(@ModelAttribute("user") User user,
+			Model model) {
 		List<QuizResult> quizResults = quizResultService.findByUser(user);
 		model.addAttribute("quizResultList", quizResults);
 		return "user/quizResults";
+	}
+
+	@RequestMapping("info")
+	public String viewPersonalInfo(Model model) {
+		return "user/personalInfo";
 	}
 
 }

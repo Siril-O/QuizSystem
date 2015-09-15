@@ -5,14 +5,13 @@
 <html>
 <head>
 <title>${param.title}</title>
-<link type="text/css" rel="stylesheet"
-	href="<c:url value="/bootstrap.min.css" />" />
-<link type="text/css" rel="stylesheet"
-	href="<c:url value="/style.css" />" />
+<link href="<c:url value="/resources/css/bootstrap.min.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/template/admin/header.jsp" />
-	<div class="container" style="margin-top: 50px;margin-bottom: 20px;"><jsp:include
+	<div class="container" style="margin-top: 50px; margin-bottom: 20px;"><jsp:include
 			page="/WEB-INF/jsp/${param.content}.jsp" /></div>
 	<jsp:include page="/WEB-INF/jsp/template/admin/footer.jsp" />
 </body>

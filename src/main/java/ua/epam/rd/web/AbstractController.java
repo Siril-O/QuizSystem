@@ -4,10 +4,12 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
@@ -36,13 +38,25 @@ public abstract class AbstractController {
 	@Autowired
 	protected QuizResultService quizResultService;
 
-	protected User addUserToModel(Model model) {
+	
+	@ModelAttribute("user")
+	public User addUser(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
-		User user = userService.getByEmail(authentication.getName());
-		model.addAttribute("user", user);
+		User user = null;
+		if (!authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
+			user = userService.getByEmail(authentication.getName());
+		}
 		return user;
 	}
+	
+//	protected User addUserToModel(Model model) {
+//		Authentication authentication = SecurityContextHolder.getContext()
+//				.getAuthentication();
+//		User user = userService.getByEmail(authentication.getName());
+//		model.addAttribute("user", user);
+//		return user;
+//	}
 
 	protected Subject getSubjectById(Long id) {
 		Subject subject = subjectService.findById(id);

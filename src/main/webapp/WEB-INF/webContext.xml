@@ -24,11 +24,6 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-<!-- 	<bean id="viewResolver2"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="2" />
-		<property name="prefix" value="/WEB-INF/jsp/admin/" />
-		<property name="suffix" value=".jsp" />
-	</bean> -->
 
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
 </beans>

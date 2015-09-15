@@ -45,14 +45,16 @@
 <h3>Questions</h3>
 <ol>
 	<c:forEach var="question" items="${quiz.questions}">
-		<li>ID:<c:out value="${question.id}" /><br>
-			<form action="/QuizSystem/jsp/question/remove" method="post">
-				<input type="hidden" name="questionId" value="${question.id}">
-				<input type="hidden" value="on" name="_confirm" />
-				<input type="submit" value="Remove" class="btn btn-primary" />
-				Confirm Remove
-				<input type="checkbox" name="confirm">
-			</form>
+		<li class="question_list_item">
+			<div class="removeBlock">
+				<form action="/QuizSystem/jsp/question/remove" method="post">
+					<input type="hidden" name="questionId" value="${question.id}">
+					<input type="hidden" value="on" name="_confirm" />
+					<input type="submit" value="Remove" class="btn btn-primary" />
+					Confirm Remove
+					<input type="checkbox" name="confirm">
+				</form>
+			</div>
 			<form action="/QuizSystem/jsp/question/update" method="post">
 				<textarea rows="10" cols="70" name="description"><c:out
 						value="${question.description}" /></textarea>
@@ -67,20 +69,20 @@
 					class="btn btn-primary" />
 				<input type="hidden" name="questionId" value="${question.id}">
 			</form>
-			<form action="/QuizSystem/jsp/variant/edit">
-				<table class="table table-hover">
-					<tr>
-						<td>Id</td>
-						<td>Description</td>
-						<td>Is Right Answer</td>
-						<td></td>
-					</tr>
-					<c:forEach var="variant" items="${question.variants}">
+			<table class="table table-hover">
+				<tr>
+					<td>Description</td>
+					<td>Is Right Answer</td>
+					<td></td>
+				</tr>
+			</table> <c:forEach var="variant" items="${question.variants}">
+				<form action="/QuizSystem/jsp/variant/edit">
+					<table class="table table-hover">
 						<tr>
-							<td><c:out value="${variant.id}" /></td>
 							<td><input name="id" type="hidden" value="${variant.id}" />
-								<input class="form-control" name="description"
-									value="${variant.description}" /></td>
+								<textarea class="form-control" name="description" rows="3"
+									cols="40">
+									${variant.description}</textarea></td>
 							<td><input type="hidden" value="on" name="_rightAnswer" />
 								<c:choose>
 									<c:when test="${variant.rightAnswer}">
@@ -92,13 +94,13 @@
 								</c:choose></td>
 							<td><input type="submit" value="Change"
 									class="btn btn-primary" /> <input type="hidden"
-									name="questionId" value="${question.id}" /> <a
+									name="questionId" value="${question.id}" /><a
 								href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
 								class="btn btn-primary">Remove</a></td>
 						</tr>
-					</c:forEach>
-				</table>
-			</form>
+					</table>
+				</form>
+			</c:forEach>
 		</li>
 	</c:forEach>
 </ol>

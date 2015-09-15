@@ -33,7 +33,7 @@ public class SubjectController extends AbstractController {
 	public String viewSubjectEditForm(
 			@RequestParam("subjectId") Subject subject, Model model) {
 		model.addAttribute("subject", subject);
-		return "admineditSubject";
+		return "admin/editSubject";
 	}
 
 	@RequestMapping(value = "/update")

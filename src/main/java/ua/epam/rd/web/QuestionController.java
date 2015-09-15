@@ -1,7 +1,5 @@
 package ua.epam.rd.web;
 
-import java.util.HashMap;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.epam.rd.domain.Question;
 import ua.epam.rd.domain.Quiz;
-import ua.epam.rd.domain.User;
 
 @Controller
 @RequestMapping("question")

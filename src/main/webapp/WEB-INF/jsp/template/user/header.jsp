@@ -6,15 +6,15 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/QuizSystem/jsp/quiz/">Quizes</a></li>
-				<li><a href="/QuizSystem/jsp/subject/">Subjects</a></li>
-				<li><a href="/QuizSystem/jsp/user/">Users</a></li>
+				<li><a href="/QuizSystem/jsp/quiz/avaliable">Quizes</a></li>
+				<li><a href="/QuizSystem/jsp/user/results">Results</a></li>
+				<li><a href="/QuizSystem/jsp/user/info">Personal</a></li>
 			</ul>
 			<c:url var="logOutUrl" value="/logout" />
 			<form action="${logOutUrl}" method="post"
 				class="navbar-form navbar-right">
 				<div class="form-group">
-					<a href="/QuizSystem/jsp/user/">${user.name}, ${user.surname}</a>
+					<a href="/QuizSystem/jsp/user/info">${user.name}, ${user.surname}</a>
 					<input class="btn btn-primary" type="submit" value="Log Out" />
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />

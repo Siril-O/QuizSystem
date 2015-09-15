@@ -1,0 +1,11 @@
+.question_list_item {
+	background-color: #F8F8F8;
+	border: 1px solid #DEDEDE;
+	margin: 25px;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+.removeBlock {
+	text-align: right;
+}
