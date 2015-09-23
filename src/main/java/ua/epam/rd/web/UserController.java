@@ -30,6 +30,13 @@ public class UserController extends AbstractController {
 		return "admin/user";
 	}
 
+	@RequestMapping("/all")
+	public String showUsers(Model model) {
+		List<User> users = userService.getAllUsers();
+		model.addAttribute("users",users);
+		return "superadmin/users";
+	}
+
 	@RequestMapping("/edit")
 	public String viewEditForm(Model model, @RequestParam("userId") User user) {
 		model.addAttribute("userToEdit", user);
@@ -82,7 +89,7 @@ public class UserController extends AbstractController {
 	public String viewRegisterTutorForm(Model model) {
 		model.addAttribute("newUser", new User());
 		model.addAttribute("roles", Role.values());
-		return "admin/register";
+		return "superadmin/register";
 	}
 
 	@RequestMapping("/registerStudent")
@@ -97,7 +104,8 @@ public class UserController extends AbstractController {
 	public String register(@ModelAttribute("newUser") @Valid User user,
 			BindingResult result,
 			@RequestParam("confirmPassword") String confirmation, Model model) {
-		return registerUser(user, result, confirmation, "admin/register", model);
+		return registerUser(user, result, confirmation, "superadmin/register",
+				model);
 	}
 
 	private String registerUser(User user, BindingResult result,

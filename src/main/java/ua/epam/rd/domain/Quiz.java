@@ -16,7 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
-@NamedQueries({ @NamedQuery(name = "Quiz.findAllQuizes", query = "SELECT q FROM Quiz AS q") })
+@NamedQueries({ @NamedQuery(name = "Quiz.findAllQuizes",
+							query = "SELECT q FROM Quiz AS q"),
+				@NamedQuery(name = "Quiz.findQuizesBySubject",
+							query ="SELECT q FROM Quiz AS q WHERE q.subject.id=:subjectId")})
 @Entity
 public class Quiz {
 

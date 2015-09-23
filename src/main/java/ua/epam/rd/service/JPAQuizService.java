@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.Subject;
 import ua.epam.rd.repository.QuizRepository;
 
 @Service
@@ -42,6 +43,11 @@ public class JPAQuizService implements QuizService {
 	@Transactional
 	public void remove(Long id) {
 		quizRepository.remove(id);
+	}
+
+	@Override
+	public List<Quiz> findQuizesBySubject(Subject subject) {
+		return quizRepository.findQuizesBySubject(subject);
 	}
 
 }

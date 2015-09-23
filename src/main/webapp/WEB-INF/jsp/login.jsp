@@ -13,7 +13,7 @@
 
 <body>
 	<div class="container">
-		<h1>Log in to System</h1>
+		<h1>Login Please</h1>
 		<c:url value="/login" var="loginUrl" />
 		<form action="${loginUrl}" method="post">
 			<c:if test="${param.error != null}">
@@ -37,8 +37,8 @@ message}" />
 				<label class="control-label" for="password">Password:</label><br />
 				<input type='password' name='password' id="password"
 					class="form-control" />
-			</div>
-			<input type="submit" value="submit" class="btn btn-primary" />
+			</div> 
+			<input type="submit" value="Login" class="btn btn-primary" />
 		</form>
 	</div>
 </body>

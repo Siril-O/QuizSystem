@@ -17,7 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
-@NamedQueries({ @NamedQuery(name = "Question.findAllQuestions", query = "SELECT q FROM Question AS q") })
+@NamedQueries({ @NamedQuery(name = "Question.findAllQuestions",
+							query = "SELECT q FROM Question AS q") })
 @Entity
 public class Question {
 	@Id

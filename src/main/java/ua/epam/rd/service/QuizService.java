@@ -3,6 +3,7 @@ package ua.epam.rd.service;
 import java.util.List;
 
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.Subject;
 
 public interface QuizService {
 
@@ -13,6 +14,8 @@ public interface QuizService {
 	public void remove(Long id);
 
 	public Quiz findById(Long id);
+	
+	public List<Quiz> findQuizesBySubject(Subject subject);
 
 	public List<Quiz> findAllQuizes();
 }

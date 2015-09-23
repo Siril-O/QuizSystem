@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import ua.epam.rd.domain.Quiz;
+import ua.epam.rd.domain.Subject;
 
 @Repository
 public class JPAQuizRepository implements QuizRepository {
@@ -46,6 +47,13 @@ public class JPAQuizRepository implements QuizRepository {
 		if (quiz != null) {
 			em.remove(quiz);
 		}
+	}
+
+	@Override
+	public List<Quiz> findQuizesBySubject(Subject subject) {
+		TypedQuery<Quiz> query = em.createNamedQuery(
+				"Quiz.findQuizesBySubject", Quiz.class);
+		return query.setParameter("subjectId", subject.getId()).getResultList();
 	}
 
 }
