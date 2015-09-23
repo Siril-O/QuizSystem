@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>ua.epam.rd</groupId>
-  <artifactId>QuizSystem</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+	<groupId>ua.epam.rd</groupId>
+	<artifactId>QuizSystem</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 
-  <name>QuizSystem</name>
-  <url>http://maven.apache.org</url>
+	<name>QuizSystem</name>
+	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +26,17 @@
 	</properties>
 
 	<dependencies>
-
+		<!-- Validation API -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.0.1.Final</version>
+		</dependency>
 		<!-- WEB -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -40,9 +50,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
-
-
+		
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -60,12 +68,12 @@
 
 
 		<!-- Spring -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.6.0</version>
 		</dependency>
-
+ -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -140,15 +148,15 @@
 
 
 		<!-- JSR-330 -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
-		<finalName>PizzaDelivery</finalName>
+		<finalName>QuizSystem</finalName>
 		<plugins>
 
 			<plugin>

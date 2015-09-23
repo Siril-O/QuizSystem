@@ -3,9 +3,13 @@ package ua.epam.rd.web;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.exception.ConstraintViolationException;
+import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +24,8 @@ import ua.epam.rd.domain.User;
 public class UserController extends AbstractController {
 
 	@RequestMapping("/")
-	public String showUsers(Model model) {
-		List<User> users = userService.getAllUsersByRole(Role.ROLE_USER);
+	public String showStudents(Model model) {
+		List<User> users = userService.getAllUsersByRole(Role.ROLE_STUDENT);
 		model.addAttribute("users", users);
 		return "admin/user";
 	}
@@ -68,24 +72,54 @@ public class UserController extends AbstractController {
 		return "redirect:";
 	}
 
-	@RequestMapping("/registerForm")
+	@RequestMapping("/registerStudentForm")
 	public String viewRegisterForm(Model model) {
+		model.addAttribute("newUser", new User());
+		return "admin/registerStudent";
+	}
+
+	@RequestMapping("/registerForm")
+	public String viewRegisterTutorForm(Model model) {
+		model.addAttribute("newUser", new User());
+		model.addAttribute("roles", Role.values());
 		return "admin/register";
 	}
 
-	@RequestMapping("/register")
-	public String viewRegisterForm(@ModelAttribute("newUser") User user,
+	@RequestMapping("/registerStudent")
+	public String registerStudent(@ModelAttribute("newUser") @Valid User user,
+			BindingResult result,
 			@RequestParam("confirmPassword") String confirmation, Model model) {
+		return registerUser(user, result, confirmation,
+				"admin/registerStudent", model);
+	}
+
+	@RequestMapping("/register")
+	public String register(@ModelAttribute("newUser") @Valid User user,
+			BindingResult result,
+			@RequestParam("confirmPassword") String confirmation, Model model) {
+		return registerUser(user, result, confirmation, "admin/register", model);
+	}
+
+	private String registerUser(User user, BindingResult result,
+			String confirmation, String destPage, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("newUser", user);
+			return destPage;
+		}
 		if (!confirmation.equals(user.getPassword())) {
-			return "admin/register";
+			model.addAttribute("newUser", user);
+			model.addAttribute("ErrorMsg", "You entered different passwords");
+			return destPage;
 		}
 		try {
-			user.setRole(Role.ROLE_USER);
+			userService.getByEmail(user.getEmail());
+		} catch (NoResultException e) {
 			userService.save(user);
-		} catch (ConstraintViolationException e) {
-			System.out.println("User already exsist");
+			return "redirect:";
 		}
-		return "redirect:";
+		model.addAttribute("newUser", user);
+		model.addAttribute("ErrorMsg", "Email already registered in  system");
+		return destPage;
 	}
 
 	@RequestMapping("/login")
@@ -104,6 +138,16 @@ public class UserController extends AbstractController {
 	@RequestMapping("info")
 	public String viewPersonalInfo(Model model) {
 		return "user/personalInfo";
+	}
+
+	@RequestMapping("/403")
+	public String viewAccessDeniedPage(Model model, @ModelAttribute User user,
+			HttpServletRequest request) {
+		String path = request.getContextPath() + "/jsp";
+		model.addAttribute("goBackUrl",
+				user.getRole() == Role.ROLE_STUDENT ? path + "/quiz/avaliable"
+						: path + "/quiz/");
+		return "403";
 	}
 
 }

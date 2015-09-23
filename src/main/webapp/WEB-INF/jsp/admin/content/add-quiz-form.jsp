@@ -4,8 +4,9 @@
 <form action="/QuizSystem/jsp/quiz/create" class="form-horizontal"
 	method="post">
 	<spring:message code="label.createQuiz.name" />
-	<input type="text" name="name" class="form-control" />
-	<br> <spring:message code="label.createQuiz.subject" /><select class="form-control" name="subjectId">
+	<input type="text" required name="name" class="form-control" />
+	<br> <spring:message code="label.createQuiz.subject" />
+	<select class="form-control" name="subjectId">
 		<c:forEach var="subject" items="${subjects}">
 			<option value="${subject.id}">${subject.name}</option>
 		</c:forEach>

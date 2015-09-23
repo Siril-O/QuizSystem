@@ -6,8 +6,8 @@
 <form action="/QuizSystem/jsp/subject/update" class="form-horizontal"
 	method="post">
 	<spring:message code="label.editSubject.name" />
-	<input type="text" name="name" value="${subject.name}" />
-	<input type="hidden" name="id" value="${subject.id}" />
+	<input type="text" name="name" value="${subject.name}" required/>
+	<input type="hidden" name="id" value="${subject.id}" required/>
 	<input type="submit"
 		value="<spring:message code="label.editSubject.submit" />"
 		class="btn btn-primary" />

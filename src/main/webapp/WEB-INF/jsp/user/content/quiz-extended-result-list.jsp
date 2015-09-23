@@ -1,32 +1,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<h3>Result</h3>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<h3><spring:message code="label.quizExtenderResult" /></h3>
 <table class="table table-hover">
 	<tr>
-		<td>Quiz Name</td>
+		<td><spring:message code="label.quizExtenderResult.quizName" /></td>
 		<td><c:out value="${result.quiz.name}" /></td>
 	</tr>
 	<tr>
-		<td>Start Time</td>
+		<td><spring:message code="label.quizExtenderResult.startTime" /></td>
 		<td><c:out value="${result.startTime}" /></td>
 	</tr>
 	<tr>
-		<td>Finish Time</td>
+		<td><spring:message code="label.quizExtenderResult.finishTime" /></td>
 		<td><c:out value="${result.endTime}" /></td>
 	</tr>
 	<tr>
-		<td>Right Answers</td>
+		<td><spring:message code="label.quizExtenderResult.rightAnswers" /></td>
 		<td><c:out value="${result.rightAnswers}" /></td>
 	</tr>
 	<tr>
-		<td>Wrong Answers</td>
+		<td><spring:message code="label.quizExtenderResult.wrongAnswers" /></td>
 		<td><c:out value="${result.wrongAnswers}" /></td>
 	</tr>
 	<tr>
-		<td>Percent</td>
+		<td><spring:message code="label.quizExtenderResult.percent" /></td>
 		<td>${result.rightAnswers/(result.rightAnswers+result.wrongAnswers)*100}%</td>
 	</tr>
 </table>
-<h3>Questions</h3>
+<h3><spring:message code="label.quizExtenderResult.questions" /></h3>
 <ol>
 	<c:forEach var="entry" items="${resultMap}">
 		<hr>
@@ -35,9 +36,9 @@
 					value="${entry.key.description}" /></textarea> <br>
 			<table class="table table-hover">
 				<tr>
-					<td>Variants</td>
-					<td>Right Answer</td>
-					<td>Your Answer</td>
+					<td><spring:message code="label.quizExtenderResult.variants" /></td>
+					<td><spring:message code="label.quizExtenderResult.rightAnswer" /></td>
+					<td><spring:message code="label.quizExtenderResult.yourAnswer" /></td>
 				</tr>
 				<c:forEach var="variantEntry" items="${entry.value}">
 					<tr>

@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
 
 @NamedQueries({ @NamedQuery(name = "Question.findAllQuestions", query = "SELECT q FROM Question AS q") })
 @Entity
@@ -24,12 +25,10 @@ public class Question {
 	@Column(name = "ID")
 	private Long id;
 	@Column(name = "DESCRIPTION")
+	@NotNull
 	private String description;
-	// @Column(name = "ORDER")
-	// private Long order;
-	// To do
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "QUIZ_ID")
 	private Quiz quiz;
 

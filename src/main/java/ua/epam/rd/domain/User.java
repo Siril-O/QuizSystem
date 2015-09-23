@@ -18,6 +18,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 @NamedQueries({
 		@NamedQuery(name = "User.getAllUsers", query = "SELECT u FROM User AS u"),
@@ -33,15 +37,22 @@ public class User {
 	@Column(name = "ID")
 	private Long id;
 	@Column(name = "FIRST_NAME")
+	@NotNull
+	@Size(min = 2, max = 30)
 	private String name;
 	@Column(name = "LAST_NAME")
+	@Size(min = 2, max = 60)
 	private String surname;
 	@Column(name = "EMAIL")
+	@NotNull
+	@Email
 	private String email;
 	@Column(name = "PASSWORD")
+	@NotNull
 	private String password;
 	@Column(name = "ROLE")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Role role;
 
 	@ManyToMany(fetch = FetchType.EAGER)

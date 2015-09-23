@@ -9,15 +9,25 @@
 	<global-method-security secured-annotations="enabled" />
 
 	<http>
+		<access-denied-handler error-page="/jsp/user/403" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/jsp/user/403" access="permitAll" />
 
 		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
-		<intercept-url pattern="/jsp/quiz/avaliable**" access="isFullyAuthenticated()" />
+
+
+
+		<intercept-url pattern="/jsp/quiz/avaliable**" access="" />
 		<intercept-url pattern="/jsp/pass/**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/user/info**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/user/results**" access="isFullyAuthenticated()" />
 
-		<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/jsp/user/register/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/jsp/user/registerForm/**"
+			access="hasRole('ROLE_ADMIN')" />
+			
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_TUTOR','ROLE_ADMIN')" />
+
 		<form-login login-page="/jsp/user/login"
 			login-processing-url="/login" username-parameter="username"
 			password-parameter="password" authentication-failure-url="/jsp/user/login?error"
@@ -32,4 +42,8 @@
 	<authentication-manager>
 		<authentication-provider ref="jPAAuthenticationProvider" />
 	</authentication-manager>
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="4" />
+	</beans:bean>
 </beans:beans>

@@ -1,15 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<h3>User Results of Quizes</h3>
-		User: ${user.name}
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<h3><spring:message code="label.quizResult.result" /></h3>
 		<table class="table table-hover">
 			<tr>
-				<td>Id</td>
-				<td>Quiz Name</td>
-				<td>Start Time</td>
-				<td>Finish Time</td>
-				<td>Right Answers</td>
-				<td>Wrong Answers</td>
-				<td>Percent</td>
+				<td><spring:message code="label.quizResult.id" /></td>
+				<td><spring:message code="label.quizExtenderResult.quizName" /></td>
+				<td><spring:message code="label.quizExtenderResult.startTime" /></td>
+				<td><spring:message code="label.quizExtenderResult.finishTime" /></td>
+				<td><spring:message code="label.quizExtenderResult.rightAnswers" /></td>
+				<td><spring:message code="label.quizExtenderResult.wrongAnswers" /></td>
+				<td><spring:message code="label.quizExtenderResult.percent" /></td>
 			</tr>
 			<c:forEach var="result" items="${quizResultList}">
 				<tr>

@@ -50,14 +50,6 @@ public abstract class AbstractController {
 		return user;
 	}
 	
-//	protected User addUserToModel(Model model) {
-//		Authentication authentication = SecurityContextHolder.getContext()
-//				.getAuthentication();
-//		User user = userService.getByEmail(authentication.getName());
-//		model.addAttribute("user", user);
-//		return user;
-//	}
-
 	protected Subject getSubjectById(Long id) {
 		Subject subject = subjectService.findById(id);
 		if (id <= 0)

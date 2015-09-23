@@ -4,6 +4,6 @@
 <form action="/QuizSystem/jsp/subject/create" class="form-horizontal"
 	method="post">
 	<spring:message code="label.createSubject.Name" />
-	<input type="text" name="name" />
+	<input type="text" name="name" required/>
 	<input type="submit" value="<spring:message code="label.createSubject.submit" />" class="btn btn-primary" />
 </form>

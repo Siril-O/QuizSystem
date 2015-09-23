@@ -17,11 +17,11 @@
 					<td><c:out value="${subject.name}" /></td>
 					<td><form action="/QuizSystem/jsp/subject/edit">
 							<input type="submit" value="<spring:message code="label.subjectList.edit" />" class="btn btn-primary" /> <input
-								type="hidden" name="subjectId" value="${subject.id}">
+								type="hidden" name="subjectId" value="${subject.id}" required/>
 						</form></td>
 					<td><form action="/QuizSystem/jsp/subject/remove" method="post">
 							<input type="submit" value="<spring:message code="label.subjectList.remove" />" class="btn btn-primary" /> <input
-								type="hidden" name="subjectId" value="${subject.id}">
+								type="hidden" name="subjectId" value="${subject.id}" required>
 						</form></td>
 				</tr>
 			</c:forEach>

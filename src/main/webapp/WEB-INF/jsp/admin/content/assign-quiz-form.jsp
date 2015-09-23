@@ -7,10 +7,10 @@
 <form action="/QuizSystem/jsp/user/assignQuiz" class="form-horizontal"
 	method="get">
 	<c:forEach var="quiz" items="${quizList}">
-		<input type="radio" name="quizId" value="${quiz.id}" />
+		<input type="radio" required name="quizId" value="${quiz.id}" />
 		<c:out value="${quiz.name}"></c:out>
 		<br>
 	</c:forEach>
-	<input type="hidden" value="${user.id}" name="userId" />
+	<input type="hidden" value="${user.id}" name="userId"  required/>
 	<input type="submit" value="<spring:message code="label.assignQuiztoUser.submit" />" class="btn btn-primary" />
 </form>

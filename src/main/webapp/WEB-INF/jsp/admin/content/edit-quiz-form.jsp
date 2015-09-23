@@ -8,8 +8,8 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td><input type="hidden" name="quizId" value="${quiz.id}" /> <input
-					type="text" name="name" value="${quiz.name}" /></td>
+			<td><input type="hidden" name="quizId" value="${quiz.id}" required/> <input
+					type="text" name="name" value="${quiz.name}" required/></td>
 			<td><input type="submit" value="<spring:message code="label.editQuiz.changeName" />"
 					class="btn btn-primary" /></td>
 		</tr>
@@ -24,14 +24,14 @@
 		</tr>
 		<tr>
 			<td><input name="subject" value="${quiz.subject.name}" readonly /></td>
-			<td><select name="subjectId">
+			<td><select name="subjectId" required>
 					<c:forEach var="subject" items="${subjects}">
 						<option value="${subject.id}"
 							${subject.id == quiz.subject.id ? 'selected="selected"' : ''}>
 							${subject.name}</option>
 					</c:forEach>
 			</select></td>
-			<td><input type="hidden" name="quizId" value="${quiz.id}" /> <input
+			<td><input type="hidden" name="quizId" value="${quiz.id}" required/> <input
 					type="submit" value="<spring:message code="label.editQuiz.changeSubject" />" class="btn btn-primary" /></td>
 		</tr>
 	</table>
@@ -39,7 +39,7 @@
 <hr>
 <h3><spring:message code="label.editQuiz.editQuestions" /></h3>
 <form action="/QuizSystem/jsp/question/add" method="post">
-	<input type="hidden" name="quizId" value="${quiz.id}" />
+	<input type="hidden" name="quizId" value="${quiz.id}" required/>
 	<input type="submit" value="<spring:message code="label.editQuiz.addQuestion" />"
 		class="btn btn-primary" />
 </form>
@@ -49,18 +49,18 @@
 		<li class="question_list_item">
 			<div class="removeBlock">
 				<form action="/QuizSystem/jsp/question/remove" method="post">
-					<input type="hidden" name="questionId" value="${question.id}">
+					<input type="hidden" name="questionId" value="${question.id}" required>
 					<input type="hidden" value="on" name="_confirm" />
 					<input type="submit" value="<spring:message code="label.editQuiz.removeQuestion" />" class="btn btn-primary" />
 					<spring:message code="label.editQuiz.confirmRemove" />
-					<input type="checkbox" name="confirm">
+					<input type="checkbox" name="confirm" required>
 				</form>
 			</div>
 			<form action="/QuizSystem/jsp/question/update" method="post">
-				<textarea rows="10" cols="70" name="description"><c:out
+				<textarea rows="10" cols="70" name="description" required><c:out
 						value="${question.description}" /></textarea>
 				<br>
-				<input type="hidden" name="questionId" value="${question.id}" />
+				<input type="hidden" name="questionId" value="${question.id}" required/>
 				<input type="submit" value="<spring:message code="label.editQuiz.changeDescription" />"
 					class="btn btn-primary" />
 			</form>
@@ -68,7 +68,7 @@
 			<form action="/QuizSystem/jsp/variant/add">
 				<input type="submit" value="<spring:message code="label.editQuiz.addVariantToQuestion" />"
 					class="btn btn-primary" />
-				<input type="hidden" name="questionId" value="${question.id}">
+				<input type="hidden" name="questionId" value="${question.id}" required>
 			</form>
 			<table class="table table-hover">
 				<tr>
@@ -80,9 +80,9 @@
 				<form action="/QuizSystem/jsp/variant/edit">
 					<table class="table table-hover">
 						<tr>
-							<td><input name="id" type="hidden" value="${variant.id}" />
+							<td><input name="id" type="hidden" value="${variant.id}" required/>
 								<textarea class="form-control" name="description" rows="3"
-									cols="40">
+									cols="40" required>
 									${variant.description}</textarea></td>
 							<td><input type="hidden" value="on" name="_rightAnswer" />
 								<c:choose>
@@ -95,7 +95,7 @@
 								</c:choose></td>
 							<td><input type="submit" value="<spring:message code="label.editQuiz.changeVariant" />"
 									class="btn btn-primary" /> <input type="hidden"
-									name="questionId" value="${question.id}" /><a
+									name="questionId" value="${question.id}" required/><a
 								href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
 								class="btn btn-primary"><spring:message code="label.editQuiz.removeVariant" /></a></td>
 						</tr>

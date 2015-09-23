@@ -30,7 +30,7 @@ public class QuizController extends AbstractController {
 		return "admin/addQuiz";
 	}
 
-	@RequestMapping(value = "create", method = RequestMethod.POST)
+	@RequestMapping(value = "create")
 	public String createQuiz(@RequestParam("subjectId") Subject subject,
 			@ModelAttribute Quiz quiz, Model model) {
 		quiz.setSubject(subject);

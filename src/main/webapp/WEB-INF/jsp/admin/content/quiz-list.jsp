@@ -21,14 +21,14 @@
 			<td><c:out value="${quiz.subject.name}" /></td>
 			<td><form action="/QuizSystem/jsp/quiz/edit" method="get">
 					<input type="submit" value="<spring:message code="label.editQuiz"/>" class="btn btn-primary" />
-					<input type="hidden" name="quizId" value="${quiz.id}">
+					<input type="hidden" name="quizId" value="${quiz.id}" required>
 				</form></td>
 			<td>
 				<form action="/QuizSystem/jsp/quiz/remove" method="post">
-					<input type="hidden" name="quizId" value="${quiz.id}">
+					<input type="hidden" name="quizId" value="${quiz.id}" required>
 					<input type="submit" value="<spring:message code="label.removeQuiz"/>" class="btn btn-primary" />
 					<spring:message code="label.removeQuizConfirm"/>
-					<input type="checkbox" name="confirm">
+					<input type="checkbox" name="confirm" required>
 				</form>
 			</td>
 		</tr>

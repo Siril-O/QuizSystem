@@ -6,8 +6,8 @@
 <form action="/QuizSystem/jsp/question/create" class="form-horizontal"
 	method="post">
 	<spring:message code="label.Description" />
-	<textarea name="description" class="form-control"></textarea>
+	<textarea name="description" required class="form-control"></textarea>
 	<br>
-	<input type="hidden" value="${quiz.id}" name="quizId" />
+	<input type="hidden" value="${quiz.id}" name="quizId" required/>
 	<input type="submit" value="<spring:message code="label.addQuestionToQuiz.submitAddQuestion" />" class="btn btn-primary" />
 </form>

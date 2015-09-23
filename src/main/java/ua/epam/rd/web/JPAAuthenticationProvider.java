@@ -12,15 +12,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ua.epam.rd.domain.User;
 import ua.epam.rd.service.UserService;
 
-//@Component("jPAAuthenticationProvider")
 public class JPAAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
@@ -30,7 +32,10 @@ public class JPAAuthenticationProvider implements AuthenticationProvider {
 		String password = authentication.getCredentials().toString();
 		User user = null;
 		try {
-			user = userService.getByEmailAndPassword(email, password);
+			user = userService.getByEmail(email);
+			if (!passwordEncoder.matches(password, user.getPassword())) {
+				return null;
+			}
 			List<GrantedAuthority> grantedAuths = new ArrayList<>();
 			grantedAuths.add(new SimpleGrantedAuthority(user.getRole()
 					.toString()));
