@@ -11,7 +11,7 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/template/user/header.jsp" />
 	<div class="container" style="margin-top: 50px;margin-bottom: 20px;"><jsp:include
-			page="/WEB-INF/jsp/user/${param.content}.jsp" /></div>
+			page="/WEB-INF/jsp/${param.content}.jsp" /></div>
 	<jsp:include page="/WEB-INF/jsp/template/user/footer.jsp" />
 </body>
 </html>

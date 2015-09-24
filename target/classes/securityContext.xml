@@ -15,9 +15,7 @@
 
 		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
 
-
-
-		<intercept-url pattern="/jsp/quiz/avaliable**" access="" />
+		<intercept-url pattern="/jsp/quiz/avaliable**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/pass/**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/user/info**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/user/results**" access="isFullyAuthenticated()" />

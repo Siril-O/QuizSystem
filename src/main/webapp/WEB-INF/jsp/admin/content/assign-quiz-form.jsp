@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <h1>
 	<spring:message code="label.assignQuiztoUser" />
-	<c:out value="${user.id}" />
+	<c:out value="${user.name}" />	<c:out value="${user.surname}" />
 </h1>
 <form action="/QuizSystem/jsp/user/assignQuiz" class="form-horizontal"
 	method="get">

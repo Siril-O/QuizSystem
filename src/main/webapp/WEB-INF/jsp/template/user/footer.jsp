@@ -1,4 +1,4 @@
-
+<div style="min-height:60px;"></div>
 <div class="navbar-fixed-bottom row-fluid">
 	<div class="navbar-inner">
 		<footer class="footer"

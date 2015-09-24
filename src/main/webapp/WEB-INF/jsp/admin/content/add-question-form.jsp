@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <h1><spring:message code="label.addQuestionToQuiz.addQuestion" />
-	<c:out value="${quiz.id}"></c:out>
+	<c:out value="${quiz.name}"></c:out>
 </h1>
 <form action="/QuizSystem/jsp/question/create" class="form-horizontal"
 	method="post">

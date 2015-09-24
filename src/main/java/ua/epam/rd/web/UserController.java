@@ -33,7 +33,7 @@ public class UserController extends AbstractController {
 	@RequestMapping("/all")
 	public String showUsers(Model model) {
 		List<User> users = userService.getAllUsers();
-		model.addAttribute("users",users);
+		model.addAttribute("users", users);
 		return "superadmin/users";
 	}
 
@@ -144,7 +144,14 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("info")
-	public String viewPersonalInfo(Model model) {
+	public String viewPersonalInfo(@ModelAttribute User user) {
+		if (user.getRole() == Role.ROLE_ADMIN) {
+			return "superadmin/personalInfo";
+		}
+		if (user.getRole() == Role.ROLE_TUTOR) {
+			return "admin/personalInfo";
+
+		}
 		return "user/personalInfo";
 	}
 
