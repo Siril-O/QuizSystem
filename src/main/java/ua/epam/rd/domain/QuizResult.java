@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 @NamedQueries({ @NamedQuery(
 		name = "QuizResult.findByUser", 
@@ -33,14 +35,18 @@ public class QuizResult {
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
+	@NotNull
 	private User user;
 
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "START_TIME")
+	@NotNull
+	@Past
 	private Date startTime;
 
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "END_TIME")
+	@NotNull
 	private Date endTime;
 
 	@Column(name = "RIGHT_ANSWERS")

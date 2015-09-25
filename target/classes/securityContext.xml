@@ -15,6 +15,7 @@
 
 		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
 
+		<intercept-url pattern="/jsp/pass/proceed**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/quiz/avaliable**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/pass/**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/user/info**" access="isFullyAuthenticated()" />
@@ -23,8 +24,9 @@
 		<intercept-url pattern="/jsp/user/register/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/jsp/user/registerForm/**"
 			access="hasRole('ROLE_ADMIN')" />
-			
-		<intercept-url pattern="/**" access="hasAnyRole('ROLE_TUTOR','ROLE_ADMIN')" />
+
+		<intercept-url pattern="/**"
+			access="hasAnyRole('ROLE_TUTOR','ROLE_ADMIN')" />
 
 		<form-login login-page="/jsp/user/login"
 			login-processing-url="/login" username-parameter="username"

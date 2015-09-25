@@ -10,7 +10,6 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
-
 <body>
 	<div class="container">
 		<h1>Login Please</h1>
@@ -32,12 +31,11 @@ message}" />
 				<label class="control-label" for="email">E-mail(login)</label><br />
 				<input type="text" name='username' id="email" class="form-control" />
 			</div>
-
 			<div class="form-group">
 				<label class="control-label" for="password">Password:</label><br />
 				<input type='password' name='password' id="password"
 					class="form-control" />
-			</div> 
+			</div>
 			<input type="submit" value="Login" class="btn btn-primary" />
 		</form>
 	</div>

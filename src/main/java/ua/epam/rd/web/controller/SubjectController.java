@@ -1,4 +1,4 @@
-package ua.epam.rd.web;
+package ua.epam.rd.web.controller;
 
 import java.util.List;
 

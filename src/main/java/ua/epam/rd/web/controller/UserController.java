@@ -1,4 +1,4 @@
-package ua.epam.rd.web;
+package ua.epam.rd.web.controller;
 
 import java.util.List;
 import java.util.Set;
@@ -57,7 +57,7 @@ public class UserController extends AbstractController {
 			Model model) {
 		List<Quiz> quizList = quizService.findAllQuizes();
 		model.addAttribute("quizList", quizList);
-		model.addAttribute("user", user);
+		model.addAttribute("userToAssign", user);
 		return "admin/assignQuiz";
 	}
 
