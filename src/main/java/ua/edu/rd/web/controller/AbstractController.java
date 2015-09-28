@@ -2,8 +2,6 @@ package ua.edu.rd.web.controller;
 
 import java.beans.PropertyEditorSupport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +22,6 @@ import ua.edu.rd.service.QuizService;
 import ua.edu.rd.service.SubjectService;
 import ua.edu.rd.service.UserService;
 import ua.edu.rd.service.VariantService;
-import ua.edu.rd.web.JPAAuthenticationProvider;
 
 public abstract class AbstractController {
 

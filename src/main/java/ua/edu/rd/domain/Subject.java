@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NamedQueries({ @NamedQuery(name = "Subject.getAllSubjects", query = "SELECT s FROM Subject AS s") })
 @Entity
@@ -17,6 +19,8 @@ public class Subject {
 	@Column(name = "ID")
 	private Long id;
 	@Column(name = "NAME")
+	@NotNull
+	@Size(min = 2, max = 50)
 	private String name;
 
 	public Subject() {

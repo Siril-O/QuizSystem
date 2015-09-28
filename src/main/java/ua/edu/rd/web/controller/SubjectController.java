@@ -2,8 +2,11 @@ package ua.edu.rd.web.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,32 +20,57 @@ public class SubjectController extends AbstractController {
 
 	@RequestMapping(value = "/")
 	public String viewAllSubjects(Model model) {
+		return viewAllSubjectsForm(model);
+	}
+
+	private String viewAllSubjectsForm(Model model) {
 		model.addAttribute("subjectList", subjectService.getAllSubjects());
 		return "admin/subject";
 	}
 
 	@RequestMapping(value = "/add")
 	public String viewSubjectAddForm(Model model) {
+		return viewCreateSubjectForm(model, new Subject());
+	}
+
+	private String viewCreateSubjectForm(Model model, Subject subject) {
+		model.addAttribute("subject", subject);
 		return "admin/addSubject";
 	}
 
 	@RequestMapping(value = "/create")
-	public String createSubject(@ModelAttribute Subject subject) {
+	public String createSubject(
+			@ModelAttribute("subject") @Valid Subject subject,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return viewCreateSubjectForm(model, subject);
+		}
 		subjectService.save(subject);
-		return "redirect:";
+		model.addAttribute("succesMessage", "NewSubjectCreated");
+		return viewAllSubjectsForm(model);
 	}
 
 	@RequestMapping(value = "/edit")
-	public String viewSubjectEditForm(
-			@RequestParam("subjectId") Subject subject, Model model) {
+	public String viewSubjectEdit(@RequestParam("subjectId") Subject subject,
+			Model model) {
+		return viewSubjectEditForm(subject, model);
+	}
+
+	private String viewSubjectEditForm(Subject subject, Model model) {
 		model.addAttribute("subject", subject);
 		return "admin/editSubject";
 	}
 
 	@RequestMapping(value = "/update")
-	public String updateSubject(@ModelAttribute Subject subject) {
+	public String updateSubject(
+			@ModelAttribute("subject") @Valid Subject subject,
+			BindingResult bindResult, Model model) {
+		if (bindResult.hasErrors()) {
+			return viewSubjectEditForm(subject, model);
+		}
 		subjectService.update(subject);
-		return "redirect:";
+		model.addAttribute("succesMessage", "SubjectUpdated");
+		return viewAllSubjectsForm(model);
 	}
 
 	@RequestMapping(value = "/remove")
@@ -50,13 +78,12 @@ public class SubjectController extends AbstractController {
 			Model model) {
 		List<Quiz> quizes = quizService.findQuizesBySubject(subject);
 		if (!quizes.isEmpty()) {
-			model.addAttribute("errorMsg",
-					"Cannot be removed, There are quizes in this subject");
-			model.addAttribute("subjectList", subjectService.getAllSubjects());
-			return "admin/subject";
+			model.addAttribute("noticeMessage", "SubjectRemoveError");
+			return viewAllSubjectsForm(model);
 		}
 		subjectService.remove(subject.getId());
-		return "redirect:";
+		model.addAttribute("succesMessage", "SubjectRemoved");
+		return viewAllSubjectsForm(model);
 	}
 
 }
