@@ -12,7 +12,7 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
                         http://www.springframework.org/schema/security
 						http://www.springframework.org/schema/security/spring-security.xsd">
-	<context:component-scan base-package="ua.epam.rd.web" />
+	<context:component-scan base-package="ua.edu.rd.web" />
 	<mvc:annotation-driven />
 
 	<security:global-method-security
@@ -41,9 +41,8 @@
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:label" />
+		<property name="basenames" value="classpath:i18n/label,classpath:i18n/message" />
 		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
 
-	
 </beans>

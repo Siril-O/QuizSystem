@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Login Please</h1>
+		<h1>Login</h1>
 		<c:url value="/login" var="loginUrl" />
 		<form action="${loginUrl}" method="post">
 			<c:if test="${param.error != null}">

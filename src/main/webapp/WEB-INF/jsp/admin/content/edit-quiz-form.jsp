@@ -1,9 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <h1>
 	<spring:message code="label.editQuiz" />
 </h1>
-<form action="/QuizSystem/jsp/quiz/changeName" method="post">
+<form:form action="/QuizSystem/jsp/quiz/changeName"
+	modelAttribute="quiz" method="post">
 	<table class="table table-hover">
 		<tr>
 			<td><spring:message code="label.editQuiz.quizName" /></td>
@@ -11,14 +13,15 @@
 		</tr>
 		<tr>
 			<td><input type="hidden" name="quizId" value="${quiz.id}"
-					required="required" /> <input type="text" name="name"
-					value="${quiz.name}" required="required" /></td>
+					required="required" /> <form:input type="text" path="name"
+					required="required" /> <form:errors path="name" cssClass="error" />
+			</td>
 			<td><input type="submit"
 					value="<spring:message code="label.editQuiz.changeName" />"
 					class="btn btn-primary" /></td>
 		</tr>
 	</table>
-</form>
+</form:form>
 <form action="/QuizSystem/jsp/quiz/changeSubject" method="post">
 	<table class="table table-hover">
 		<tr>

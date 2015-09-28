@@ -15,6 +15,7 @@
 
 		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
 
+		<intercept-url pattern="/jsp**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/pass/proceed**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/quiz/avaliable**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/pass/**" access="isFullyAuthenticated()" />
@@ -36,9 +37,9 @@
 		<csrf disabled="true" />
 	</http>
 
-	<beans:bean id="mySuccessHandler" class="ua.epam.rd.web.MySuccessHandler"></beans:bean>
+	<beans:bean id="mySuccessHandler" class="ua.edu.rd.web.MySuccessHandler"></beans:bean>
 	<beans:bean id="jPAAuthenticationProvider" name="jPAAuthenticationProvider"
-		class="ua.epam.rd.web.JPAAuthenticationProvider"></beans:bean>
+		class="ua.edu.rd.web.JPAAuthenticationProvider"></beans:bean>
 	<authentication-manager>
 		<authentication-provider ref="jPAAuthenticationProvider" />
 	</authentication-manager>

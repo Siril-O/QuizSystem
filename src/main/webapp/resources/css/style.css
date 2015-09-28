@@ -10,6 +10,63 @@
 	text-align: right;
 }
 
-.error{
-	color:red
+.error {
+	color: red
+}
+
+.message {
+	margin-top: 60px;
+}
+
+.alert {
+	padding: 19px 15px;
+	color: #fefefe;
+	position: relative;
+	font: 14px/20px Museo300Regular, Helvetica, Arial, sans-serif;
+}
+
+.alert .msg {
+	padding: 0 20px 0 40px;
+	font-size: 18px
+}
+
+.alert p {
+	margin: 0;
+}
+
+.alert .toggle-alert {
+	position: absolute;
+	top: 7px;
+	right: 10px;
+	display: block;
+	text-indent: -10000px;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1), 1px 1px 1px
+		rgba(255, 255, 255, 0.1);
+	-moz-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1), 1px 1px 1px
+		rgba(255, 255, 255, 0.1);
+	box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1), 1px 1px 1px
+		rgba(255, 255, 255, 0.1);
+}
+
+.success-box {
+	background: #7EB62E url(../images/success.png) no-repeat 14px 14px;
+}
+
+.error-box {
+	background: #f64b2f url(../images/error.png) no-repeat 14px 14px;
+}
+
+.notice-box {
+	background: #f6ca2f url(../images/notice.png) no-repeat 14px 14px;
+}
+
+.rightAnswer , .rightAnswer:hover {
+	background: #BCE954
+}
+
+.wrongAnswer , .wrongAnswer:hover {
+	background: #C34A2C
 }

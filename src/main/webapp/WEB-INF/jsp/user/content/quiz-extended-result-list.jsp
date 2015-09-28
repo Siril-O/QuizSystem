@@ -51,7 +51,9 @@
 					<td><spring:message code="label.quizExtenderResult.yourAnswer" /></td>
 				</tr>
 				<c:forEach var="variantEntry" items="${entry.value}">
-					<tr>
+					<tr
+						<c:if test="${variantEntry.key.rightAnswer == variantEntry.value}">class="rightAnswer"</c:if>
+						<c:if test="${variantEntry.key.rightAnswer != variantEntry.value}">class="wrongAnswer"</c:if>>
 						<td><c:out value="${variantEntry.key.description}" /></td>
 						<td><c:choose>
 								<c:when test="${variantEntry.key.rightAnswer}">
