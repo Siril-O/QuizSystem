@@ -14,6 +14,25 @@
 	<br>
 	<input type="hidden" value="${quiz.id}" name="quizId"
 		required="required" />
+	<c:forEach var="variant" items="${question.variants}" varStatus="i">
+		<table class="table table-hover">
+			<tr>
+				<td><form:hidden path="variants[${i.index}].id"
+						required="required" /> <form:textarea
+						path="variants[${i.index}].description" rows="3" cols="70"
+						required="required" /></td>
+				<td><form:checkbox path="variants[${i.index}].rightAnswer" /></td>
+				<td><a
+					href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
+					class="btn btn-primary"><spring:message
+							code="label.editQuiz.removeVariant" /></a></td>
+			</tr>
+			<tr>
+				<form:errors path="variants[${i.index}].description"
+					cssClass="error" />
+			</tr>
+		</table>
+	</c:forEach>
 	<input type="submit"
 		value="<spring:message code="label.addQuestionToQuiz.submitAddQuestion" />"
 		class="btn btn-primary" />

@@ -1,28 +1,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <h3>
 	<spring:message code="label.editUser" />
 </h3>
-<form action="/QuizSystem/jsp/user/update" method="post"
-	class="form-horizontal">
+<form:form action="/QuizSystem/jsp/user/update" method="post"
+	class="form-horizontal" modelAttribute="userToEdit">
 	<div class="form-group">
 		<label for="name"><spring:message code="label.editUser.name" /></label>
-		<input type="text" value="${userToEdit.name}" name="name"
-			class="form-control" id="name" required>
+		<form:input path="name" class="form-control" id="name"
+			required="required" />
+		<form:errors path="name" cssClass="error" />
 	</div>
 	<div class="form-group">
 		<label for="surname"><spring:message
 				code="label.editUser.surname" /></label>
-		<input type="text" value="${userToEdit.surname}" name="surname"
-			class="form-control" id="surname" required>
+		<form:input path="surname" class="form-control" id="surname"
+			required="required" />
+		<form:errors path="surname" cssClass="error" />
 	</div>
 	<div class="form-group">
 		<label for="email"><spring:message code="label.editUser.email" /></label>
-		<input type="text" value="${userToEdit.email}" name="email"
-			class="form-control" id="email" required>
+		<form:input path="email" class="form-control" id="email"
+			required="required" />
+		<form:errors path="email" cssClass="error" />
 	</div>
-	<input type="hidden" name="id" value="${userToEdit.id}" required>
+	<form:hidden path="id" required="required" />
 	<input type="submit"
 		value="<spring:message code="label.editUser.submit" />"
 		class="btn btn-primary" />
-</form>
+</form:form>

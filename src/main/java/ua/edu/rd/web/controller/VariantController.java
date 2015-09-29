@@ -1,7 +1,12 @@
 package ua.edu.rd.web.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,37 +22,57 @@ public class VariantController extends AbstractController {
 	@RequestMapping(value = "/add")
 	public String viewAddVariantForm(
 			@RequestParam("questionId") Question question, Model model) {
-		model.addAttribute("question", question);
-		return "admin/addVariant";
+		return viewCreateForm(question, new Variant(), model);
 	}
 
-	@RequestMapping(value = "/edit")
-	public String editVariant(@RequestParam("questionId") Question question,
-			Model model, @ModelAttribute Variant variant,
-			RedirectAttributes redirectAttributes) {
-		variant.setQuestion(question);
-		variantService.updateVariant(variant);
-		redirectAttributes.addAttribute("quizId", question.getQuiz().getId());
-		return "redirect:../quiz/edit";
+	private String viewCreateForm(Question question, Variant variant,
+			Model model) {
+		model.addAttribute("question", question);
+		model.addAttribute("variant", variant);
+		return "admin/addVariant";
 	}
 
 	@RequestMapping(value = "/create")
 	public String createVariant(@RequestParam("questionId") Question question,
-			@ModelAttribute Variant variant, Model model,
+			@ModelAttribute("variant") @Valid Variant variant,
+			BindingResult bindResult, Model model,
 			RedirectAttributes redirectAttributes) {
+		if (bindResult.hasErrors()) {
+			return viewCreateForm(question, variant, model);
+		}
 		variant.setQuestion(question);
 		variantService.save(variant);
-		redirectAttributes.addAttribute("quizId", question.getQuiz().getId());
-		return "redirect:../quiz/edit";
+		redirectAttributes.addAttribute("succesMessage", "VariantCreated");
+		redirectAttributes.addAttribute("questionId", variant.getQuestion()
+				.getId());
+		return "redirect:../question/editForm";
 	}
 
 	@RequestMapping(value = "/remove")
 	public String removeVariant(@RequestParam("variantId") Variant variant,
 			Model model, RedirectAttributes redirectAttributes) {
-		variantService.remove(variant.getId());
-		redirectAttributes.addAttribute("quizId", variant.getQuestion()
-				.getQuiz().getId());
-		return "redirect:../quiz/edit";
+		if (!variant.getRightAnswer()
+				|| checkIfRightVariantPresent(variant.getQuestion()
+						.getVariants(), variant)) {
+			variantService.remove(variant.getId());
+			redirectAttributes.addAttribute("succesMessage", "VariantRemoved");
+		} else {
+			redirectAttributes.addAttribute("succesMessage",
+					"ErrorRemoveVariant");
+		}
+		redirectAttributes.addAttribute("questionId", variant.getQuestion()
+				.getId());
+		return "redirect:../question/editForm";
+	}
+
+	private boolean checkIfRightVariantPresent(List<Variant> variants,
+			Variant exlusiveVariant) {
+		for (Variant variant : variants) {
+			if (variant.getRightAnswer() && !variant.equals(exlusiveVariant)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

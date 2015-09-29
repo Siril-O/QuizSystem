@@ -55,11 +55,15 @@ public class QuizController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String showEditForm(@RequestParam("quizId") Quiz quiz, Model model) {
+	public String showEditForm(
+			@RequestParam("quizId") Quiz quiz,
+			@RequestParam(value = "succesMessage", required = false) String message,
+			Model model) {
+		model.addAttribute("succesMessage", message);
 		return viewEditForm(quiz, model);
 	}
 
-	protected String viewEditForm(Quiz quiz, Model model) {
+	private String viewEditForm(Quiz quiz, Model model) {
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("subjects", subjectService.getAllSubjects());
 		return "admin/editQuiz";
@@ -83,7 +87,6 @@ public class QuizController extends AbstractController {
 	public String editQuiz(@RequestParam("quizId") Quiz quiz,
 			@ModelAttribute("quiz") @Valid Quiz newQuiz,
 			BindingResult bindingResult, Model model) {
-		System.out.println(newQuiz);
 		if (!bindingResult.hasFieldErrors("name")) {
 			quiz.setName(newQuiz.getName());
 			quizService.update(quiz);

@@ -59,94 +59,38 @@
 <h3>
 	<spring:message code="label.editQuiz.questions" />
 </h3>
-<ol>
-	<c:forEach var="question" items="${quiz.questions}">
-		<li class="question_list_item">
-			<div class="removeBlock">
+<table class="table table-hover">
+	<tr>
+		<td><spring:message code="label.id" /></td>
+		<td><spring:message code="label.Description" /></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<c:forEach items="${quiz.questions}" var="question">
+		<tr>
+			<td><c:out value="${question.id}" /></td>
+			<td><textarea rows="10" cols="60"><c:out
+						value="${question.description}" /></textarea></td>
+			<td>
+				<form action="/QuizSystem/jsp/question/editForm" method="get">
+					<input type="submit"
+						value="<spring:message code="label.editQestion"/>"
+						class="btn btn-primary" />
+					<input type="hidden" name="questionId" value="${question.id}"
+						required>
+				</form>
+			</td>
+			<td>
 				<form action="/QuizSystem/jsp/question/remove" method="post">
 					<input type="hidden" name="questionId" value="${question.id}"
-						required="required">
-					<input type="hidden" value="on" name="_confirm" />
+						required>
+					<spring:message code="label.editQuiz.confirmRemove" />
+					<input type="checkbox" name="confirm" required>
 					<input type="submit"
 						value="<spring:message code="label.editQuiz.removeQuestion" />"
 						class="btn btn-primary" />
-					<spring:message code="label.editQuiz.confirmRemove" />
-					<input type="checkbox" name="confirm" required="required">
 				</form>
-			</div>
-			<form action="/QuizSystem/jsp/question/update" method="post">
-				<textarea rows="14" cols="70" name="description" required="required"><c:out
-						value="${question.description}" /></textarea>
-				<br>
-				<input type="hidden" name="questionId" value="${question.id}"
-					required="required" />
-				<input type="submit"
-					value="<spring:message code="label.editQuiz.changeDescription" />"
-					class="btn btn-primary" />
-			</form>
-			<h4>
-				<spring:message code="label.editQuiz.variants" />
-			</h4>
-			<form action="/QuizSystem/jsp/variant/add">
-				<input type="submit"
-					value="<spring:message code="label.editQuiz.addVariantToQuestion" />"
-					class="btn btn-primary" />
-				<input type="hidden" name="questionId" value="${question.id}"
-					required="required">
-			</form> <%-- <c:forEach var="variant" items="${question.variants}">
-				<form action="/QuizSystem/jsp/variant/edit" method="post">
-					<table class="table table-hover">
-						<tr>
-							<td><input name="id" type="hidden" value="${variant.id}"
-									required="required" /> <textarea name="description" rows="3"
-									cols="70" required="required">${variant.description}</textarea></td>
-							<td><input type="hidden" value="on" name="_rightAnswer" />
-								<spring:message code="label.editQuiz.isRightAnswer" /> <c:choose>
-									<c:when test="${variant.rightAnswer}">
-										<input name="rightAnswer" type="checkbox" checked />
-									</c:when>
-									<c:otherwise>
-										<input name="rightAnswer" type="checkbox" />
-									</c:otherwise>
-								</c:choose></td>
-							<td><input type="submit"
-									value="<spring:message code="label.editQuiz.changeVariant" />"
-									class="btn btn-primary" /> <input type="hidden"
-									name="questionId" value="${question.id}" required="required" /><a
-								href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
-								class="btn btn-primary"><spring:message
-										code="label.editQuiz.removeVariant" /></a></td>
-						</tr>
-					</table>
-				</form>
-			</c:forEach> --%> <c:forEach var="variant"
-				items="${question.variants}">
-				<form action="/QuizSystem/jsp/variant/edit" method="post">
-					<table class="table table-hover">
-						<tr>
-							<td><input name="id" type="hidden" value="${variant.id}"
-									required="required" /> <textarea name="description" rows="3"
-									cols="70" required="required">${variant.description}</textarea></td>
-							<td><input type="hidden" value="on" name="_rightAnswer" />
-								<spring:message code="label.editQuiz.isRightAnswer" /> <c:choose>
-									<c:when test="${variant.rightAnswer}">
-										<input name="rightAnswer" type="checkbox" checked />
-									</c:when>
-									<c:otherwise>
-										<input name="rightAnswer" type="checkbox" />
-									</c:otherwise>
-								</c:choose></td>
-							<td><input type="submit"
-									value="<spring:message code="label.editQuiz.changeVariant" />"
-									class="btn btn-primary" /> <input type="hidden"
-									name="questionId" value="${question.id}" required="required" /><a
-								href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
-								class="btn btn-primary"><spring:message
-										code="label.editQuiz.removeVariant" /></a></td>
-						</tr>
-					</table>
-				</form>
-			</c:forEach>
-		</li>
+			</td>
+		</tr>
 	</c:forEach>
-</ol>
+</table>

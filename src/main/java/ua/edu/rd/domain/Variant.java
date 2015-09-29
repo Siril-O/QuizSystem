@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NamedQueries({ @NamedQuery(name = "Variant.fiandAllVariants", query = "SELECT v FROM Variant AS v") })
 @Entity
@@ -22,8 +24,11 @@ public class Variant {
 	@JoinColumn(name = "QUESTION_ID")
 	private Question question;
 	@Column(name = "DESCRIPTION")
+	@NotNull
+	@Size(min = 2, max = 255)
 	private String description;
 	@Column(name = "RIGHT_ANSWER")
+	@NotNull
 	private Boolean rightAnswer;
 
 	public Variant() {

@@ -1,6 +1,6 @@
 package ua.edu.rd.domain;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,22 +35,28 @@ public class Question {
 	@JoinColumn(name = "QUIZ_ID")
 	private Quiz quiz;
 
-	@OneToMany(mappedBy = "question", cascade = { CascadeType.PERSIST,
+	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	@OrderBy("ID")
-	private Set<Variant> variants;
+	@Valid
+	private List<Variant> variants;
 
 	public Question() {
 		super();
 	}
 
-	public Question(String description, Set<Variant> variants) {
+	public Question(List<Variant> variants) {
+		super();
+		this.variants = variants;
+	}
+
+	public Question(String description, List<Variant> variants) {
 		super();
 		this.description = description;
 		this.variants = variants;
 	}
 
-	public Question(Long id, String description, Set<Variant> variants) {
+	public Question(Long id, String description, List<Variant> variants) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -89,7 +96,7 @@ public class Question {
 	/**
 	 * @return the variants
 	 */
-	public Set<Variant> getVariants() {
+	public List<Variant> getVariants() {
 		return variants;
 	}
 
@@ -97,7 +104,7 @@ public class Question {
 	 * @param variants
 	 *            the variants to set
 	 */
-	public void setVariants(Set<Variant> variants) {
+	public void setVariants(List<Variant> variants) {
 		this.variants = variants;
 	}
 

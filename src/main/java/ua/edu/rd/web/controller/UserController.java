@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.QuizResult;
@@ -24,32 +25,57 @@ import ua.edu.rd.domain.User;
 public class UserController extends AbstractController {
 
 	@RequestMapping("/")
-	public String showStudents(Model model) {
+	public String showStudents(
+			@RequestParam(value = "succesMessage", required = false) String message,
+			Model model) {
 		List<User> users = userService.getAllUsersByRole(Role.ROLE_STUDENT);
 		model.addAttribute("users", users);
+		model.addAttribute("succesMessage", message);
 		return "admin/user";
 	}
 
 	@RequestMapping("/all")
-	public String showUsers(Model model) {
+	public String showUsers(
+			@RequestParam(value = "succesMessage", required = false) String message,
+			Model model) {
 		List<User> users = userService.getAllUsers();
 		model.addAttribute("users", users);
+		model.addAttribute("succesMessage", message);
 		return "superadmin/users";
 	}
 
 	@RequestMapping("/edit")
-	public String viewEditForm(Model model, @RequestParam("userId") User user) {
+	public String viewEditForm(Model model, @RequestParam("userId") User user,
+			@ModelAttribute("user") User signedInUser) {
+		return viewUserEditForm(user, model, signedInUser);
+	}
+
+	private String viewUserEditForm(User user, Model model, User signedInUser) {
 		model.addAttribute("userToEdit", user);
-		return "admin/editUser";
+		if (signedInUser.getRole() == Role.ROLE_ADMIN) {
+			return "admin/editUser";
+		} else {
+			return "superadmin/editUser";
+		}
 	}
 
 	@RequestMapping("/update")
 	public String updateUser(@RequestParam("id") User oldUser,
-			@ModelAttribute("newUser") User user) {
-		user.setPassword(oldUser.getPassword());
-		user.setRole(oldUser.getRole());
-		userService.update(user);
-		return "redirect:";
+			@Valid @ModelAttribute("userToEdit") User userToEdit,
+			BindingResult bindResult, Model model,
+			RedirectAttributes reditectAttributes) {
+		userToEdit.setPassword(oldUser.getPassword());
+		userToEdit.setRole(oldUser.getRole());
+		User signedInUser = addUser(model);
+		if (bindResult.hasFieldErrors("name")
+				|| bindResult.hasFieldErrors("surname")
+				|| bindResult.hasFieldErrors("email")) {
+			return viewUserEditForm(userToEdit, model, signedInUser);
+		}
+		userService.update(userToEdit);
+		reditectAttributes.addAttribute("succesMessage", "UserEdited");
+		return "redirect:"
+				+ ((signedInUser.getRole() == Role.ROLE_ADMIN) ? "all" : "");
 	}
 
 	@RequestMapping("/assignQuizForm")
@@ -80,14 +106,22 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/registerStudentForm")
-	public String viewRegisterForm(Model model) {
-		model.addAttribute("newUser", new User());
+	public String viewRegisterStudentForm(Model model) {
+		return viewStudentRegisterForm(model, new User());
+	}
+
+	private String viewStudentRegisterForm(Model model, User user) {
+		model.addAttribute("newUser", user);
 		return "admin/registerStudent";
 	}
 
 	@RequestMapping("/registerForm")
 	public String viewRegisterTutorForm(Model model) {
-		model.addAttribute("newUser", new User());
+		return viewRegisterForm(model, new User());
+	}
+
+	private String viewRegisterForm(Model model, User user) {
+		model.addAttribute("newUser", user);
 		model.addAttribute("roles", Role.values());
 		return "superadmin/register";
 	}
@@ -95,39 +129,48 @@ public class UserController extends AbstractController {
 	@RequestMapping("/registerStudent")
 	public String registerStudent(@ModelAttribute("newUser") @Valid User user,
 			BindingResult result,
-			@RequestParam("confirmPassword") String confirmation, Model model) {
-		return registerUser(user, result, confirmation,
-				"admin/registerStudent", model);
-	}
-
-	@RequestMapping("/register")
-	public String register(@ModelAttribute("newUser") @Valid User user,
-			BindingResult result,
-			@RequestParam("confirmPassword") String confirmation, Model model) {
-		return registerUser(user, result, confirmation, "superadmin/register",
-				model);
-	}
-
-	private String registerUser(User user, BindingResult result,
-			String confirmation, String destPage, Model model) {
+			@RequestParam("confirmPassword") String confirmation, Model model,
+			RedirectAttributes reditectAttributes) {
 		if (result.hasErrors()) {
-			model.addAttribute("newUser", user);
-			return destPage;
+			return viewStudentRegisterForm(model, user);
 		}
 		if (!confirmation.equals(user.getPassword())) {
-			model.addAttribute("newUser", user);
-			model.addAttribute("ErrorMsg", "You entered different passwords");
-			return destPage;
+			model.addAttribute("noticeMessage", "PasswordsDiffer");
+			return viewStudentRegisterForm(model, user);
 		}
 		try {
 			userService.getByEmail(user.getEmail());
 		} catch (NoResultException e) {
 			userService.save(user);
+			reditectAttributes.addAttribute("succesMessage",
+					"StudentRegistered");
 			return "redirect:";
 		}
-		model.addAttribute("newUser", user);
-		model.addAttribute("ErrorMsg", "Email already registered in  system");
-		return destPage;
+		model.addAttribute("noticeMessage", "EmailIsInSystem");
+		return viewStudentRegisterForm(model, user);
+	}
+
+	@RequestMapping("/register")
+	public String register(@ModelAttribute("newUser") @Valid User user,
+			BindingResult result,
+			@RequestParam("confirmPassword") String confirmation, Model model,
+			RedirectAttributes reditectAttributes) {
+		if (result.hasErrors()) {
+			return viewRegisterForm(model, user);
+		}
+		if (!confirmation.equals(user.getPassword())) {
+			model.addAttribute("noticeMessage", "PasswordsDiffer");
+			return viewRegisterForm(model, user);
+		}
+		try {
+			userService.getByEmail(user.getEmail());
+		} catch (NoResultException e) {
+			userService.save(user);
+			reditectAttributes.addAttribute("succesMessage", "UserRegistered");
+			return "redirect:all";
+		}
+		model.addAttribute("noticeMessage", "EmailIsInSystem");
+		return viewRegisterForm(model, user);
 	}
 
 	@RequestMapping("/login")
