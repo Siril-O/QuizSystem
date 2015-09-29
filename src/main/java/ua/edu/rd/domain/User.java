@@ -27,7 +27,8 @@ import org.hibernate.validator.constraints.Email;
 		@NamedQuery(name = "User.getAllUsers", query = "SELECT u FROM User AS u"),
 		@NamedQuery(name = "User.getAllUsersByRole", query = "SELECT u FROM User AS u WHERE u.role=:role"),
 		@NamedQuery(name = "User.getByEmailAndPassword", query = "SELECT u FROM User AS u WHERE u.email=:email AND u.password=:password"),
-		@NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User AS u WHERE u.email=:email") })
+		@NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User AS u WHERE u.email=:email"),
+		@NamedQuery(name = "User.getUsersAssignedToQuiz", query = "SELECT DISTINCT u FROM User AS u, IN(u.avaliableQuizes) q WHERE q.id=:quizId") })
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "EMAIL") })
 public class User {

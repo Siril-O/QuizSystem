@@ -12,10 +12,10 @@
 		<access-denied-handler error-page="/jsp/user/403" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/jsp/user/403" access="permitAll" />
-
+		<intercept-url pattern="/*" access="permitAll" />
 		<intercept-url pattern="/jsp/user/login**" access="permitAll" />
-
-		<intercept-url pattern="/jsp**" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/jsp/" access="isFullyAuthenticated()" />
+		
 		<intercept-url pattern="/jsp/pass/proceed**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/quiz/avaliable**" access="isFullyAuthenticated()" />
 		<intercept-url pattern="/jsp/pass/**" access="isFullyAuthenticated()" />

@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.Role;
 import ua.edu.rd.domain.User;
 
@@ -61,6 +62,13 @@ public class JPAUserRepository implements UserRepository {
 		if (user.getId() != null) {
 			em.merge(user);
 		}
+	}
+
+	@Override
+	public List<User> getUsersAssignedToQuiz(Quiz quiz) {
+		TypedQuery<User> query = em.createNamedQuery(
+				"User.getUsersAssignedToQuiz", User.class);
+		return query.setParameter("quizId", quiz.getId()).getResultList();
 	}
 
 }

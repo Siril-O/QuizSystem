@@ -1,9 +1,9 @@
 package ua.edu.rd.web;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ua.edu.rd.domain.Question;
 import ua.edu.rd.domain.Quiz;
@@ -22,7 +22,7 @@ public class QuizPassingProgress {
 	public QuizPassingProgress(Quiz quiz) {
 		super();
 		this.quiz = quiz;
-		questionAswerProgress = new HashMap<Question, List<Variant>>();
+		questionAswerProgress = new ConcurrentHashMap<Question, List<Variant>>();
 		startTime = new Date();
 	}
 

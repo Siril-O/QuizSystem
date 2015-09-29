@@ -47,11 +47,8 @@
 				code="label.registerUser.confirmPassword" /></label>
 		<input type="password" name="confirmPassword" class="form-control"
 			id="confirmPassword" required="required" />
-		<p class="error">${ErrorMsg}</p>
 	</div>
-
 	<input type="submit"
 		value="<spring:message code="label.register.submit" />"
 		class="btn btn-primary" />
-
 </form:form>

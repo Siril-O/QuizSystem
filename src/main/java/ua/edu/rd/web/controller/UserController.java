@@ -178,12 +178,33 @@ public class UserController extends AbstractController {
 		return "login";
 	}
 
+	@RequestMapping("/removeResult")
+	public String removeResult(@RequestParam("resultId") Long id,
+			@RequestParam("userId") Long userId,
+			RedirectAttributes reditectAttribute) {
+		quizResultService.remove(id);
+		reditectAttribute.addAttribute("succesMessage", "ResultRemoved");
+		reditectAttribute.addAttribute("userId", userId);
+		return "redirect:resultsForTutor";
+	}
+
 	@RequestMapping("/results")
 	public String viewUserQuizResults(@ModelAttribute("user") User user,
 			Model model) {
 		List<QuizResult> quizResults = quizResultService.findByUser(user);
 		model.addAttribute("quizResultList", quizResults);
 		return "user/quizResults";
+	}
+
+	@RequestMapping("/resultsForTutor")
+	public String viewUserQuizResultsForTutor(
+			@RequestParam("userId") User user,
+			Model model,
+			@RequestParam(value = "succesMessage", required = false) String message) {
+		List<QuizResult> quizResults = quizResultService.findByUser(user);
+		model.addAttribute("quizResultList", quizResults);
+		model.addAttribute("succesMessage", message);
+		return "admin/quizResults";
 	}
 
 	@RequestMapping("info")

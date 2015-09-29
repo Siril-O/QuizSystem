@@ -14,8 +14,9 @@ public interface QuizRepository {
 	public void remove(Long id);
 
 	public Quiz findById(Long id);
-	
+
 	public List<Quiz> findQuizesBySubject(Subject subject);
 
 	public List<Quiz> findAllQuizes();
+
 }

@@ -21,11 +21,7 @@
 						required="required" /> <form:textarea
 						path="variants[${i.index}].description" rows="3" cols="70"
 						required="required" /></td>
-				<td><form:checkbox path="variants[${i.index}].rightAnswer" /></td>
-				<td><a
-					href="/QuizSystem/jsp/variant/remove?variantId=${variant.id}"
-					class="btn btn-primary"><spring:message
-							code="label.editQuiz.removeVariant" /></a></td>
+				<td><spring:message code="label.editQuiz.isRightAnswer" /> <form:checkbox path="variants[${i.index}].rightAnswer" /></td>
 			</tr>
 			<tr>
 				<form:errors path="variants[${i.index}].description"

@@ -71,11 +71,19 @@ public class QuizController extends AbstractController {
 
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String removeQuiz(
-			@RequestParam("quizId") Long quizId,
+			@RequestParam("quizId") Quiz quiz,
 			@RequestParam(value = "confirm", defaultValue = "false") boolean confirm,
 			Model model) {
+		if(!userService.getUsersAssignedToQuiz(quiz).isEmpty()){
+			model.addAttribute("noticeMessage", "QuizRemoveErrorUsersAreAssignedToQuiz");
+			return viewAllQuizes(model);
+		}
+		if(!quizResultService.findByQuiz(quiz).isEmpty()){
+			model.addAttribute("noticeMessage", "QuizRemoveErrorQuizHasPassingResults");
+			return viewAllQuizes(model);
+		}
 		if (confirm) {
-			quizService.remove(quizId);
+			quizService.remove(quiz.getId());
 			model.addAttribute("succesMessage", "QuizRemoved");
 		} else {
 			model.addAttribute("noticeMessage", "ConfirmQuizRemoved");
@@ -90,10 +98,10 @@ public class QuizController extends AbstractController {
 		if (!bindingResult.hasFieldErrors("name")) {
 			quiz.setName(newQuiz.getName());
 			quizService.update(quiz);
-
 			model.addAttribute("succesMessage", "QuizNameUpdated");
+		} else {
+			model.addAttribute("noticeMessage", "NotValidQuizName");
 		}
-		model.addAttribute("noticeMessage", "NotValidQuizName");
 		return viewEditForm(quiz, model);
 	}
 

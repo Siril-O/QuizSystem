@@ -1,7 +1,6 @@
 package ua.edu.rd.web.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;

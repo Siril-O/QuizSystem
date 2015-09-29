@@ -2,6 +2,7 @@ package ua.edu.rd.service;
 
 import java.util.List;
 
+import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.Role;
 import ua.edu.rd.domain.User;
 
@@ -21,4 +22,5 @@ public interface UserService {
 
 	public User getByEmail(String email);
 
+	public List<User> getUsersAssignedToQuiz(Quiz quiz);
 }

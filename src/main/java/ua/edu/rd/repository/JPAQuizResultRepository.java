@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.QuizResult;
 import ua.edu.rd.domain.User;
 
@@ -29,9 +30,24 @@ public class JPAQuizResultRepository implements QuizResultRepository {
 
 	@Override
 	public List<QuizResult> findByUser(User user) {
-		TypedQuery<QuizResult> query = em
-				.createNamedQuery("QuizResult.findByUser", QuizResult.class);
+		TypedQuery<QuizResult> query = em.createNamedQuery(
+				"QuizResult.findByUser", QuizResult.class);
 		return query.setParameter("userId", user.getId()).getResultList();
+	}
+
+	@Override
+	public List<QuizResult> findByQuiz(Quiz quiz) {
+		TypedQuery<QuizResult> query = em.createNamedQuery(
+				"QuizResult.findByQuiz", QuizResult.class);
+		return query.setParameter("quizId", quiz.getId()).getResultList();
+	}
+
+	@Override
+	public void remove(Long id) {
+		QuizResult quizResult = em.find(QuizResult.class, id);
+		if (quizResult != null) {
+			em.remove(quizResult);
+		}
 	}
 
 }

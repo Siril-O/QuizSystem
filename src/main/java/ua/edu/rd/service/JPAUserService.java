@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.Role;
 import ua.edu.rd.domain.User;
 import ua.edu.rd.repository.UserRepository;
@@ -56,6 +57,11 @@ public class JPAUserService implements UserService {
 	@Transactional
 	public void update(User user) {
 		userRepository.update(user);
+	}
+
+	@Override
+	public List<User> getUsersAssignedToQuiz(Quiz quiz) {
+		return userRepository.getUsersAssignedToQuiz(quiz);
 	}
 
 }

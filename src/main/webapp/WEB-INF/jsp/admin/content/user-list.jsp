@@ -25,19 +25,38 @@
 			<td><c:out value="${user.surname}" /></td>
 			<td><c:out value="${user.email}" /></td>
 			<td><c:out value="${user.role}" /></td>
-			<td><form action="/QuizSystem/jsp/user/edit">
+			<%-- <td><form action="/QuizSystem/jsp/user/edit">
 					<input type="submit"
 						value="<spring:message code="label.userList.edit" />"
 						class="btn btn-primary" />
 					<input type="hidden" name="userId" value="${user.id}" required>
-				</form></td>
-			<td><form action="/QuizSystem/jsp/user/assignQuizForm"
-					method="post">
+				</form></td> --%>
+			<td>
+				
+					<a href="/QuizSystem/jsp/user/edit?userId=${user.id}"
+						class="btn btn-primary"><spring:message
+							code="label.userList.edit" /></a> <a
+						href="/QuizSystem/jsp/user/assignQuizForm?userId=${user.id}"
+						class="btn btn-primary"><spring:message
+							code="label.userList.assignQuiz" /></a> <a
+						href="/QuizSystem/jsp/user/resultsForTutor?userId=${user.id}"
+						class="btn btn-primary"><spring:message
+							code="label.userList.passingResults" /></a>
+				 <%-- <form action="/QuizSystem/jsp/user/assignQuizForm" method="post">
 					<input type="submit"
 						value="<spring:message code="label.userList.assignQuiz" />"
 						class="btn btn-primary" />
 					<input type="hidden" name="userId" value="${user.id}" required>
-				</form></td>
+				</form> --%>
+			</td>
+			<%-- <td>
+				<form action="/QuizSystem/jsp/user/resultsForTutor" method="post">
+					<input type="submit"
+						value="<spring:message code="label.userList.passingResults" />"
+						class="btn btn-primary" />
+					<input type="hidden" name="userId" value="${user.id}" required>
+				</form>
+			</td> --%>
 		</tr>
 		<tr>
 			<td colspan="8"><ul>

@@ -38,9 +38,7 @@
 		<label for="confirmPassword"><spring:message
 				code="label.registerUser.confirmPassword" /></label>
 		<input type="password" name="confirmPassword" class="form-control"
-			id="confirmPassword" required="required" />
-			<p class="error">${ErrorMsg}</p>
-	</div>
+			id="confirmPassword" required="required" />	</div>
 	<input type="hidden" name="role" value="ROLE_STUDENT"/>
 	<input type="submit"
 		value="<spring:message code="label.registerUser.submit" />"

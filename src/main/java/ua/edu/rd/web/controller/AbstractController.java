@@ -37,19 +37,19 @@ public abstract class AbstractController {
 	protected UserService userService;
 	@Autowired
 	protected QuizResultService quizResultService;
-	
-	
+
 	@ModelAttribute("user")
 	public User addUser(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		User user = null;
-		if (!authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
+		if (!authentication.getAuthorities().contains(
+				new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
 			user = userService.getByEmail(authentication.getName());
 		}
 		return user;
 	}
-	
+
 	protected Subject getSubjectById(Long id) {
 		Subject subject = subjectService.findById(id);
 		if (id <= 0)

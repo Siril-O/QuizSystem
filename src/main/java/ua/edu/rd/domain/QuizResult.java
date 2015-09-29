@@ -19,7 +19,10 @@ import javax.validation.constraints.Past;
 
 @NamedQueries({ @NamedQuery(
 		name = "QuizResult.findByUser", 
-		query = "SELECT qr FROM QuizResult AS qr WHERE qr.user.id=:userId")})
+		query = "SELECT qr FROM QuizResult AS qr WHERE qr.user.id=:userId"),
+		@NamedQuery(
+				name = "QuizResult.findByQuiz", 
+				query = "SELECT qr FROM QuizResult AS qr WHERE qr.quiz.id=:quizId")})
 
 @Entity
 @Table(name = "USER_TEST_RESULT")
