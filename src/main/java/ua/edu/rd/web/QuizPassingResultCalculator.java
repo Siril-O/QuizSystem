@@ -18,6 +18,9 @@ public class QuizPassingResultCalculator {
 
 	public QuizResult calculateResult(QuizPassingProgress progress, User user,
 			Date endDate) {
+		if (progress == null || user == null || endDate == null) {
+			throw new IllegalArgumentException();
+		}
 
 		Map<Question, List<Variant>> answerProgress = progress
 				.getQuestionAswerProgress();

@@ -10,7 +10,6 @@
 </form>
 <table class="table table-hover">
 	<tr>
-		<td><spring:message code="label.userList.id" /></td>
 		<td><spring:message code="label.userList.name" /></td>
 		<td><spring:message code="label.userList.surname" /></td>
 		<td><spring:message code="label.userList.email" /></td>
@@ -20,7 +19,6 @@
 	</tr>
 	<c:forEach var="user" items="${users}">
 		<tr>
-			<td><c:out value="${user.id}" /></td>
 			<td><c:out value="${user.name}" /></td>
 			<td><c:out value="${user.surname}" /></td>
 			<td><c:out value="${user.email}" /></td>
@@ -34,3 +32,11 @@
 		</tr>
 	</c:forEach>
 </table>
+<ul class="pagination">
+	<c:forEach begin="1" end="${pagesNumber}" var="i">
+		<c:set var="pageOffset" value="${(i-1)*maxResults}" />
+		<li <c:if test="${offset==(pageOffset)}">class="active"</c:if>>
+			<a href="/QuizSystem/jsp/user/all?offset=${pageOffset}">${i} </a>
+		</li>
+	</c:forEach>
+</ul>

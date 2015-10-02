@@ -56,8 +56,12 @@ public class SubjectController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit")
-	public String viewSubjectEdit(@RequestParam("subjectId") Subject subject,
+	public String viewSubjectEdit(
+			@RequestParam(value = "subjectId", required = false) Subject subject,
 			Model model) {
+		if (subject == null) {
+			return "redirect:";
+		}
 		return viewSubjectEditForm(subject, model);
 	}
 

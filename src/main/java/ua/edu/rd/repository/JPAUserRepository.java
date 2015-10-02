@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -29,16 +30,20 @@ public class JPAUserRepository implements UserRepository {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<User> getAllUsers(Integer offset, Integer maxResults) {
 		TypedQuery<User> query = em.createNamedQuery("User.getAllUsers",
 				User.class);
+		query.setFirstResult(offset);
+		query.setMaxResults(maxResults);
 		return query.getResultList();
 	}
 
 	@Override
-	public List<User> getAllUsersByRole(Role role) {
+	public List<User> getAllUsersByRole(Role role, Integer offset, Integer maxResults) {
 		TypedQuery<User> query = em.createNamedQuery("User.getAllUsersByRole",
 				User.class);
+		query.setFirstResult(offset);
+		query.setMaxResults(maxResults);
 		return query.setParameter("role", role).getResultList();
 	}
 
@@ -69,6 +74,20 @@ public class JPAUserRepository implements UserRepository {
 		TypedQuery<User> query = em.createNamedQuery(
 				"User.getUsersAssignedToQuiz", User.class);
 		return query.setParameter("quizId", quiz.getId()).getResultList();
+	}
+
+	@Override
+	public Long getAllUsersTotalResulCount() {
+		Query queryTotal = em
+				.createNamedQuery("User.getAllUsersTotalResulCount");
+		return (long) queryTotal.getSingleResult();
+	}
+
+	@Override
+	public Long getAllUsersByRoleTotalResulCount(Role role) {
+		Query queryTotal = em.createNamedQuery(
+				"User.getAllUsersByRoleTotalResulCount").setParameter("role", role);
+		return (long) queryTotal.getSingleResult();
 	}
 
 }

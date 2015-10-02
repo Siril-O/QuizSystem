@@ -1,10 +1,10 @@
 package ua.edu.rd.web.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -24,38 +24,58 @@ import ua.edu.rd.domain.User;
 @RequestMapping("user")
 public class UserController extends AbstractController {
 
+	private static final int DEFAULT_OFFSET = 0;
+	private static final int DEFAULT_MAX_RESULTS = 5;
+
 	@RequestMapping("/")
 	public String showStudents(
 			@RequestParam(value = "succesMessage", required = false) String message,
+			@RequestParam(value = "offset", required = false) Integer offset,
 			Model model) {
-		List<User> users = userService.getAllUsersByRole(Role.ROLE_STUDENT);
-		model.addAttribute("users", users);
+		model.addAttribute("users", userService.getAllUsersByRole(
+				Role.ROLE_STUDENT, offset, DEFAULT_MAX_RESULTS));
+		preparePaging(offset, model, userService.getAllUsersByRolePagesNumber(
+				Role.ROLE_STUDENT, DEFAULT_MAX_RESULTS));
 		model.addAttribute("succesMessage", message);
 		return "admin/user";
+	}
+
+	private void preparePaging(Integer offset, Model model, Long pagesNumber) {
+		model.addAttribute("maxResults", DEFAULT_MAX_RESULTS);
+		model.addAttribute("offset", offset != null ? offset : DEFAULT_OFFSET);
+		model.addAttribute("pagesNumber", pagesNumber);
 	}
 
 	@RequestMapping("/all")
 	public String showUsers(
 			@RequestParam(value = "succesMessage", required = false) String message,
+			@RequestParam(value = "offset", required = false) Integer offset,
 			Model model) {
-		List<User> users = userService.getAllUsers();
-		model.addAttribute("users", users);
+		model.addAttribute("users",
+				userService.getAllUsers(offset, DEFAULT_MAX_RESULTS));
+		preparePaging(offset, model,
+				userService.getAllUsersPagesNumber(DEFAULT_MAX_RESULTS));
 		model.addAttribute("succesMessage", message);
 		return "superadmin/users";
 	}
 
 	@RequestMapping("/edit")
-	public String viewEditForm(Model model, @RequestParam("userId") User user,
+	public String viewEditForm(Model model,
+			@RequestParam(value = "userId", required = false) User user,
 			@ModelAttribute("user") User signedInUser) {
+		if (user == null) {
+			return "redirect:"
+					+ (signedInUser.getRole() == Role.ROLE_ADMIN ? "all" : "");
+		}
 		return viewUserEditForm(user, model, signedInUser);
 	}
 
 	private String viewUserEditForm(User user, Model model, User signedInUser) {
 		model.addAttribute("userToEdit", user);
 		if (signedInUser.getRole() == Role.ROLE_ADMIN) {
-			return "admin/editUser";
-		} else {
 			return "superadmin/editUser";
+		} else {
+			return "admin/editUser";
 		}
 	}
 
@@ -81,15 +101,28 @@ public class UserController extends AbstractController {
 	@RequestMapping("/assignQuizForm")
 	public String viewQuizAssignForm(@RequestParam("userId") User user,
 			Model model) {
-		List<Quiz> quizList = quizService.findAllQuizes();
-		model.addAttribute("quizList", quizList);
+		return viewQuizesForAssigment(user, model);
+	}
+
+	private String viewQuizesForAssigment(User user, Model model) {
+		List<Quiz> quizes = quizService.findAllQuizes();
+		for (Iterator<Quiz> iter = quizes.iterator(); iter.hasNext();) {
+			if (iter.next().getQuestions().isEmpty()) {
+				iter.remove();
+			}
+		}
+		model.addAttribute("quizList", quizes);
 		model.addAttribute("userToAssign", user);
 		return "admin/assignQuiz";
 	}
 
 	@RequestMapping("/assignQuiz")
 	public String assignQuiz(@RequestParam("userId") User user,
-			@RequestParam("quizId") Quiz quiz) {
+			@RequestParam("quizId") Quiz quiz, Model model) {
+		if (quiz.getQuestions().isEmpty()) {
+			model.addAttribute("noticeMessage", "QuizContainsNoQuestions");
+			return viewQuizesForAssigment(user, model);
+		}
 		Set<Quiz> avaliableQuizes = user.getAvaliableQuizes();
 		avaliableQuizes.add(quiz);
 		userService.update(user);
@@ -101,6 +134,7 @@ public class UserController extends AbstractController {
 			@RequestParam("quizId") Quiz quiz) {
 		Set<Quiz> avaliableQuizes = user.getAvaliableQuizes();
 		avaliableQuizes.remove(quiz);
+		System.out.println("************** " + avaliableQuizes);
 		userService.update(user);
 		return "redirect:";
 	}
@@ -214,19 +248,8 @@ public class UserController extends AbstractController {
 		}
 		if (user.getRole() == Role.ROLE_TUTOR) {
 			return "admin/personalInfo";
-
 		}
 		return "user/personalInfo";
-	}
-
-	@RequestMapping("/403")
-	public String viewAccessDeniedPage(Model model, @ModelAttribute User user,
-			HttpServletRequest request) {
-		String path = request.getContextPath() + "/jsp";
-		model.addAttribute("goBackUrl",
-				user.getRole() == Role.ROLE_STUDENT ? path + "/quiz/avaliable"
-						: path + "/quiz/");
-		return "403";
 	}
 
 }

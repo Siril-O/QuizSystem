@@ -6,7 +6,6 @@
 </h3>
 <table class="table table-hover">
 	<tr>
-		<td><spring:message code="label.quizResult.id" /></td>
 		<td><spring:message code="label.quizExtenderResult.quizName" /></td>
 		<td><spring:message code="label.quizExtenderResult.startTime" /></td>
 		<td><spring:message code="label.quizExtenderResult.finishTime" /></td>
@@ -16,7 +15,6 @@
 	</tr>
 	<c:forEach var="result" items="${quizResultList}">
 		<tr>
-			<td><c:out value="${result.id}" /></td>
 			<td><c:out value="${result.quiz.name}" /></td>
 			<td><fmt:formatDate type="both" dateStyle="medium"
 					timeStyle="short" value="${result.startTime}" /></td>

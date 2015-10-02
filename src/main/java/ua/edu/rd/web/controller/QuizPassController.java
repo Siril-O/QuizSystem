@@ -6,8 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +20,6 @@ import ua.edu.rd.domain.Quiz;
 import ua.edu.rd.domain.QuizResult;
 import ua.edu.rd.domain.User;
 import ua.edu.rd.domain.Variant;
-import ua.edu.rd.web.JPAAuthenticationProvider;
 import ua.edu.rd.web.QuizPassingProgress;
 import ua.edu.rd.web.QuizPassingResultCalculator;
 
@@ -30,9 +27,6 @@ import ua.edu.rd.web.QuizPassingResultCalculator;
 @RequestMapping("pass")
 @SessionAttributes({ "progress" })
 public class QuizPassController extends AbstractController {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(JPAAuthenticationProvider.class);
 
 	@Autowired
 	private QuizPassingResultCalculator resultCalculator;

@@ -16,6 +16,8 @@ import ua.edu.rd.repository.UserRepository;
 @Service
 public class JPAUserService implements UserService {
 
+	private static final int DEFAULT_MAX_RESULT = 5;
+	private static final int DEFAULT_OFFSET = 0;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -34,13 +36,27 @@ public class JPAUserService implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
-		return userRepository.getAllUsers();
+	public List<User> getAllUsersByRole(Role role, Integer offset,
+			Integer maxResults) {
+		return userRepository.getAllUsersByRole(role, offset != null ? offset
+				: DEFAULT_OFFSET, maxResults != null ? maxResults
+				: DEFAULT_MAX_RESULT);
 	}
 
 	@Override
-	public List<User> getAllUsersByRole(Role role) {
-		return userRepository.getAllUsersByRole(role);
+	public Long getAllUsersByRoleTotalResulCount(Role role) {
+		return userRepository.getAllUsersByRoleTotalResulCount(role);
+	}
+
+	@Override
+	public Long getAllUsersByRolePagesNumber(Role role, Integer maxResults) {
+		if (maxResults == null) {
+			maxResults = DEFAULT_MAX_RESULT;
+		}
+		long totalResults = userRepository
+				.getAllUsersByRoleTotalResulCount(role);
+		long pagesNumber = totalResults / maxResults;
+		return (totalResults % maxResults) != 0 ? pagesNumber + 1 : pagesNumber;
 	}
 
 	@Override
@@ -62,6 +78,29 @@ public class JPAUserService implements UserService {
 	@Override
 	public List<User> getUsersAssignedToQuiz(Quiz quiz) {
 		return userRepository.getUsersAssignedToQuiz(quiz);
+	}
+
+	@Override
+	public List<User> getAllUsers(Integer offset, Integer maxResults) {
+
+		return userRepository.getAllUsers(offset != null ? offset
+				: DEFAULT_OFFSET, maxResults != null ? maxResults
+				: DEFAULT_MAX_RESULT);
+	}
+
+	@Override
+	public Long getAllUsersTotalResulCount() {
+		return userRepository.getAllUsersTotalResulCount();
+	}
+
+	@Override
+	public Long getAllUsersPagesNumber(Integer maxResults) {
+		if (maxResults == null) {
+			maxResults = DEFAULT_MAX_RESULT;
+		}
+		long totalResults = userRepository.getAllUsersTotalResulCount();
+		long pagesNumber = totalResults / maxResults;
+		return (totalResults % maxResults) != 0 ? pagesNumber + 1 : pagesNumber;
 	}
 
 }

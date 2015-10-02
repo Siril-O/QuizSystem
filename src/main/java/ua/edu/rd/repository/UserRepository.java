@@ -14,9 +14,14 @@ public interface UserRepository {
 
 	public User findByid(Long id);
 
-	public List<User> getAllUsers();
+	public List<User> getAllUsers(Integer offset, Integer maxResults);
 
-	public List<User> getAllUsersByRole(Role role);
+	public Long getAllUsersTotalResulCount();
+
+	public List<User> getAllUsersByRole(Role role, Integer offset,
+			Integer maxResults);
+
+	public Long getAllUsersByRoleTotalResulCount(Role role);
 
 	public User getByEmailAndPassword(String email, String password);
 

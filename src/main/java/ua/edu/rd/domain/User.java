@@ -24,11 +24,20 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
 @NamedQueries({
-		@NamedQuery(name = "User.getAllUsers", query = "SELECT u FROM User AS u"),
-		@NamedQuery(name = "User.getAllUsersByRole", query = "SELECT u FROM User AS u WHERE u.role=:role"),
-		@NamedQuery(name = "User.getByEmailAndPassword", query = "SELECT u FROM User AS u WHERE u.email=:email AND u.password=:password"),
-		@NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User AS u WHERE u.email=:email"),
-		@NamedQuery(name = "User.getUsersAssignedToQuiz", query = "SELECT DISTINCT u FROM User AS u, IN(u.avaliableQuizes) q WHERE q.id=:quizId") })
+		@NamedQuery(name = "User.getAllUsers",
+				query = "SELECT u FROM User AS u"),
+		@NamedQuery(name = "User.getAllUsersTotalResulCount",
+				query = "SELECT count(u.id) FROM User AS u"),
+		@NamedQuery(name = "User.getAllUsersByRole",
+				query = "SELECT u FROM User AS u WHERE u.role=:role"),
+		@NamedQuery(name = "User.getAllUsersByRoleTotalResulCount",
+				query = "SELECT count(u.id) FROM User AS u WHERE u.role=:role"),
+		@NamedQuery(name = "User.getByEmailAndPassword",
+				query = "SELECT u FROM User AS u WHERE u.email=:email AND u.password=:password"),
+		@NamedQuery(name = "User.getByEmail",
+				query = "SELECT u FROM User AS u WHERE u.email=:email"),
+		@NamedQuery(name = "User.getUsersAssignedToQuiz",
+				query = "SELECT DISTINCT u FROM User AS u, IN(u.avaliableQuizes) q WHERE q.id=:quizId") })
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "EMAIL") })
 public class User {

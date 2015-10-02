@@ -3,7 +3,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/QuizSystem/jsp/quiz/">Quiz System</a>
+			<a class="navbar-brand" href="/QuizSystem/">Quiz System for Tutor</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">

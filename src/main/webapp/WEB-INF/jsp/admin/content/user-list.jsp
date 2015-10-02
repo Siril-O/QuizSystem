@@ -10,67 +10,51 @@
 </form>
 <table class="table table-hover">
 	<tr>
-		<td><spring:message code="label.userList.id" /></td>
-		<td><spring:message code="label.userList.name" /></td>
-		<td><spring:message code="label.userList.surname" /></td>
-		<td><spring:message code="label.userList.email" /></td>
-		<td><spring:message code="label.userList.role" /></td>
-		<td></td>
+		<td><b><spring:message code="label.userList.name" /></b></td>
+		<td><b><spring:message code="label.userList.surname" /></b></td>
+		<td><b><spring:message code="label.userList.email" /></b></td>
+		<td><b><spring:message code="label.userList.role" /></b></td>
 		<td></td>
 	</tr>
 	<c:forEach var="user" items="${users}">
 		<tr>
-			<td><c:out value="${user.id}" /></td>
 			<td><c:out value="${user.name}" /></td>
 			<td><c:out value="${user.surname}" /></td>
 			<td><c:out value="${user.email}" /></td>
 			<td><c:out value="${user.role}" /></td>
-			<%-- <td><form action="/QuizSystem/jsp/user/edit">
-					<input type="submit"
-						value="<spring:message code="label.userList.edit" />"
-						class="btn btn-primary" />
-					<input type="hidden" name="userId" value="${user.id}" required>
-				</form></td> --%>
-			<td>
-				
-					<a href="/QuizSystem/jsp/user/edit?userId=${user.id}"
-						class="btn btn-primary"><spring:message
-							code="label.userList.edit" /></a> <a
-						href="/QuizSystem/jsp/user/assignQuizForm?userId=${user.id}"
-						class="btn btn-primary"><spring:message
-							code="label.userList.assignQuiz" /></a> <a
-						href="/QuizSystem/jsp/user/resultsForTutor?userId=${user.id}"
-						class="btn btn-primary"><spring:message
-							code="label.userList.passingResults" /></a>
-				 <%-- <form action="/QuizSystem/jsp/user/assignQuizForm" method="post">
-					<input type="submit"
-						value="<spring:message code="label.userList.assignQuiz" />"
-						class="btn btn-primary" />
-					<input type="hidden" name="userId" value="${user.id}" required>
-				</form> --%>
-			</td>
-			<%-- <td>
-				<form action="/QuizSystem/jsp/user/resultsForTutor" method="post">
-					<input type="submit"
-						value="<spring:message code="label.userList.passingResults" />"
-						class="btn btn-primary" />
-					<input type="hidden" name="userId" value="${user.id}" required>
-				</form>
-			</td> --%>
+			<td><a href="/QuizSystem/jsp/user/edit?userId=${user.id}"
+				class="btn btn-primary"><spring:message
+						code="label.userList.edit" /></a> <a
+				href="/QuizSystem/jsp/user/assignQuizForm?userId=${user.id}"
+				class="btn btn-primary"><spring:message
+						code="label.userList.assignQuiz" /></a> <a
+				href="/QuizSystem/jsp/user/resultsForTutor?userId=${user.id}"
+				class="btn btn-primary"><spring:message
+						code="label.userList.passingResults" /></a>
 		</tr>
 		<tr>
-			<td colspan="8"><ul>
-					<c:forEach var="quiz" items="${user.avaliableQuizes}">
-						<li><c:out value="${quiz.name}" />
-							<form action="/QuizSystem/jsp/user/unassignQuiz" method="post">
-								<input type="hidden" name="quizId" value="${quiz.id}" required />
-								<input type="submit"
-									value="<spring:message code="label.userList.unassignQuiz" />"
-									class="btn btn-primary" />
-								<input type="hidden" name="userId" value="${user.id}" required>
-							</form></li>
-					</c:forEach>
-				</ul></td>
+			<c:forEach var="quiz" items="${user.avaliableQuizes}">
+				<tr>
+					<td colspan="3"></td>
+					<td>${quiz.name}</td>
+					<td>
+						<form action="/QuizSystem/jsp/user/unassignQuiz" method="post">
+							<input type="hidden" name="quizId" value="${quiz.id}" required />
+							<input type="submit"
+								value="<spring:message code="label.userList.unassignQuiz" />"
+								class="btn btn-default" />
+							<input type="hidden" name="userId" value="${user.id}" required>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
 		</tr>
 	</c:forEach>
 </table>
+<ul class="pagination">
+	<c:forEach begin="1" end="${pagesNumber}" var="i">
+		<c:set var="pageOffset" value="${(i-1)*maxResults}" />
+		<li <c:if test="${offset==(pageOffset)}">class="active"</c:if>><a
+			href="/QuizSystem/jsp/user/?offset=${pageOffset}">${i} </a></li>
+	</c:forEach>
+</ul>

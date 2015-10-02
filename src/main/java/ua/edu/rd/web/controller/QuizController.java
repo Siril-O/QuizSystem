@@ -56,9 +56,12 @@ public class QuizController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String showEditForm(
-			@RequestParam("quizId") Quiz quiz,
+			@RequestParam(value = "quizId", required = false) Quiz quiz,
 			@RequestParam(value = "succesMessage", required = false) String message,
 			Model model) {
+		if (quiz == null) {
+			return "redirect:";
+		}
 		model.addAttribute("succesMessage", message);
 		return viewEditForm(quiz, model);
 	}
@@ -74,12 +77,14 @@ public class QuizController extends AbstractController {
 			@RequestParam("quizId") Quiz quiz,
 			@RequestParam(value = "confirm", defaultValue = "false") boolean confirm,
 			Model model) {
-		if(!userService.getUsersAssignedToQuiz(quiz).isEmpty()){
-			model.addAttribute("noticeMessage", "QuizRemoveErrorUsersAreAssignedToQuiz");
+		if (!userService.getUsersAssignedToQuiz(quiz).isEmpty()) {
+			model.addAttribute("noticeMessage",
+					"QuizRemoveErrorUsersAreAssignedToQuiz");
 			return viewAllQuizes(model);
 		}
-		if(!quizResultService.findByQuiz(quiz).isEmpty()){
-			model.addAttribute("noticeMessage", "QuizRemoveErrorQuizHasPassingResults");
+		if (!quizResultService.findByQuiz(quiz).isEmpty()) {
+			model.addAttribute("noticeMessage",
+					"QuizRemoveErrorQuizHasPassingResults");
 			return viewAllQuizes(model);
 		}
 		if (confirm) {
