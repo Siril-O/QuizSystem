@@ -17,13 +17,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-@NamedQueries({ @NamedQuery(
-		name = "QuizResult.findByUser", 
-		query = "SELECT qr FROM QuizResult AS qr WHERE qr.user.id=:userId"),
-		@NamedQuery(
-				name = "QuizResult.findByQuiz", 
-				query = "SELECT qr FROM QuizResult AS qr WHERE qr.quiz.id=:quizId")})
-
+@NamedQueries({
+		@NamedQuery(name = "QuizResult.findByUser", query = "SELECT qr FROM QuizResult AS qr WHERE qr.user.id=:userId"),
+		@NamedQuery(name = "QuizResult.findByQuiz", query = "SELECT qr FROM QuizResult AS qr WHERE qr.quiz.id=:quizId") })
 @Entity
 @Table(name = "USER_TEST_RESULT")
 public class QuizResult {
@@ -188,6 +184,86 @@ public class QuizResult {
 	 */
 	public void setWrongAnswers(Integer wrongAnswers) {
 		this.wrongAnswers = wrongAnswers;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((quiz == null) ? 0 : quiz.hashCode());
+		result = prime * result
+				+ ((rightAnswers == null) ? 0 : rightAnswers.hashCode());
+		result = prime * result
+				+ ((startTime == null) ? 0 : startTime.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuizResult other = (QuizResult) obj;
+		if (endTime == null) {
+			if (other.endTime != null)
+				return false;
+		} else if (!endTime.equals(other.endTime))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (quiz == null) {
+			if (other.quiz != null)
+				return false;
+		} else if (!quiz.equals(other.quiz))
+			return false;
+		if (rightAnswers == null) {
+			if (other.rightAnswers != null)
+				return false;
+		} else if (!rightAnswers.equals(other.rightAnswers))
+			return false;
+		if (startTime == null) {
+			if (other.startTime != null)
+				return false;
+		} else if (!startTime.equals(other.startTime))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "QuizResult [id=" + id + ", quiz=" + quiz + ", user=" + user
+				+ ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", rightAnswers=" + rightAnswers + ", wrongAnswers="
+				+ wrongAnswers + "]";
 	}
 
 }

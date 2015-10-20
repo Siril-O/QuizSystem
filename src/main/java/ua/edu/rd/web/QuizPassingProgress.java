@@ -81,4 +81,67 @@ public class QuizPassingProgress {
 		this.quiz = quiz;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((questionAswerProgress == null) ? 0 : questionAswerProgress
+						.hashCode());
+		result = prime * result + ((quiz == null) ? 0 : quiz.hashCode());
+		result = prime * result
+				+ ((startTime == null) ? 0 : startTime.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuizPassingProgress other = (QuizPassingProgress) obj;
+		if (questionAswerProgress == null) {
+			if (other.questionAswerProgress != null)
+				return false;
+		} else if (!questionAswerProgress.equals(other.questionAswerProgress))
+			return false;
+		if (quiz == null) {
+			if (other.quiz != null)
+				return false;
+		} else if (!quiz.equals(other.quiz))
+			return false;
+		if (startTime == null) {
+			if (other.startTime != null)
+				return false;
+		} else if (!startTime.equals(other.startTime))
+			return false;
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "QuizPassingProgress [questionAswerProgress="
+				+ questionAswerProgress + ", quiz=" + quiz + ", startTime="
+				+ startTime + "]";
+	}
+
 }

@@ -134,7 +134,6 @@ public class UserController extends AbstractController {
 			@RequestParam("quizId") Quiz quiz) {
 		Set<Quiz> avaliableQuizes = user.getAvaliableQuizes();
 		avaliableQuizes.remove(quiz);
-		System.out.println("************** " + avaliableQuizes);
 		userService.update(user);
 		return "redirect:";
 	}
